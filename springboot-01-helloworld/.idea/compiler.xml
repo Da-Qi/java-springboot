@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="springboot-BookStore" />
+        <module name="springboot-03-web" />
+        <module name="springboot-bookstore" />
+        <module name="springboot-02-config" />
+        <module name="springboot-01-helloworld" />
+        <module name="springboot-05-security" />
+        <module name="springboot-04-mybatis" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="springboot-01-helloworld" target="1.8" />
+      <module name="springboot-02-config" target="1.8" />
+      <module name="springboot-03-web" target="1.8" />
+      <module name="springboot-03-web (1)" target="1.8" />
+      <module name="springboot-04-mybatis" target="1.8" />
+      <module name="springboot-05-security" target="1.8" />
+      <module name="springboot-BookStore" target="1.8" />
+      <module name="springboot-bookstore" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot-01-helloworld" options="-parameters" />
+      <module name="springboot-02-config" options="-parameters" />
+      <module name="springboot-03-web" options="-parameters" />
+      <module name="springboot-04-mybatis" options="-parameters" />
+      <module name="springboot-05-security" options="-parameters" />
+      <module name="springboot-BookStore" options="-parameters" />
+      <module name="springboot-bookstore" options="-parameters" />
+    </option>
+  </component>
+</project>
