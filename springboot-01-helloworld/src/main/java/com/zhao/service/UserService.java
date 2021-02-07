@@ -10,4 +10,6 @@ public interface UserService {
     User findUserByNickName(String nickname);
 
     void changeUserImageUrl(String imageUrl, long user_id);
+
+    boolean ifUserExist(String username);
 }

@@ -119,15 +119,31 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/user/update_info", produces = "application/json;charset=utf-8")
-    public void userUpdate(HttpServletRequest request) {
-        System.out.println("我信息呗请求了");
-        JSONObject jsonObject = new JSONObject();
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        Set<String> strings = parameterMap.keySet();
-        for (String key : strings) {
-            System.out.println(key);
+    @RequestMapping(value = "/user/exist", produces = "application/json;charset=utf-8")
+    public String userExist(@RequestBody JSONObject jsonObject) {
+        JSONObject resultObject = new JSONObject();
+        String username = jsonObject.getString("username");
+        boolean exist = userService.ifUserExist(username);
+        //如果存在，说明该用户名已经被占用
+        if (exist){
+            resultObject.put("flag",false);
+            resultObject.put("msg","该用户名已经存在了哦");
+        }else {
+            //前端返回一个绿色的√，表示可以使用
+            resultObject.put("flag",true);
         }
+        return resultObject.toString();
+    }
+
+    @RequestMapping(value = "/user/update_info", produces = "application/json;charset=utf-8")
+    public String userUpdate(@RequestBody JSONObject jsonObject) {
+        JSONObject resultObject = new JSONObject();
+        String username = jsonObject.getString("username");
+        String nickname = jsonObject.getString("nickname");
+        String telephone = jsonObject.getString("telephone");
+        String gender = jsonObject.getString("gender");
+        return "hello";
+
     }
 
     @RequestMapping(value = "/user/update_image", produces = "application/json;charset=utf-8")
@@ -138,8 +154,6 @@ public class UserController {
         MultipartFile file = files.get(0);
         String name = file.getName();
         int index = name.lastIndexOf(".");
-        System.out.println(name);
-        System.out.println(index);
         String suffix = name.substring(index);
         try {
             InputStream fis = file.getInputStream();

@@ -36,4 +36,11 @@ public class UserServiceImpl implements UserService {
     public void changeUserImageUrl(String imageUrl, long user_id) {
         userMapper.changeUserImageUrl(imageUrl,user_id);
     }
+
+    @Override
+    public boolean ifUserExist(String username) {
+        int count = userMapper.findUserByName(username);
+        System.out.println("count=" + count);
+        return count != 0;
+    }
 }

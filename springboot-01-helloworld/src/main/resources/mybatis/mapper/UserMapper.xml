@@ -9,8 +9,8 @@
         (null,#{user_name},#{user_password},#{user_nickname},#{user_telephone},#{user_gender},#{user_img_url},#{user_register_time},0);
     </insert>
 
-    <select id="findUserByName" parameterType="string" resultType="user">
-        select * from user where user_name = #{username};
+    <select id="findUserByName" parameterType="string" resultType="int">
+        select count(user_name) from user where user_name = #{username};
     </select>
 
     <select id="findUserByUsernameAndPassword" resultType="user">

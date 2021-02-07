@@ -89,7 +89,7 @@
                 $("#nickname").val(data.nickname);
                 $("#telephone").val(data.telephone);
                 $("#gender").val(data.gender);
-                $("#user_img").attr('src','../static'+data.img_url);
+                $("#user_img").attr('src', '../static' + data.img_url);
             }
         });
 
@@ -112,20 +112,24 @@
         });
 
         $("#submit_info_btn").click(function () {
+            alert("我被点了");
             var file = $("#fileupload");
-            var items = file[0].files;
-            var formData = new FormData();
-            formData.append(items[0].name,items[0]);
-            $.ajax({
-                type: "post",
-                url: "/user/update_image",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    alert("发送图片了");
-                }
-            });
+            if (file == null) {
+                var items = file[0].files;
+                var formData = new FormData();
+                formData.append(items[0].name, items[0]);
+                $.ajax({
+                    type: "post",
+                    url: "/user/update_image",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        alert("发送图片了");
+                    }
+                });
+            }
+
             $.ajax({
                 type: "post",
                 url: "/user/update_info",
@@ -143,9 +147,40 @@
             //修改信息后刷新页面
             location.reload();
         });
-
     });
 
+
+    $(document).ready(function () {
+        $("#username_for_change").blur(function () {
+            var username = $("#username_for_change").val();
+            if (username === '') {
+                $("#username_for_change").css("border", "1px solid red")
+                $("#submit_info_btn").attr("disabled", true);
+            } else if (username === $("#username").val()) {
+                $("#username_for_change").css("border", "");
+                $("#submit_info_btn").attr("disabled", false);
+            } else {
+                $.ajax({
+                    url: "user/exist",
+                    type: 'post',
+                    dataType: 'json',
+                    data: JSON.stringify({'username': username}),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.flag) {
+                            $("#username_for_change").css("border", "");
+                            $("#msg").html(null);
+                            $("#submit_info_btn").attr("disabled", false);
+                        } else {
+                            $("#username_for_change").css("border", "1px solid red");
+                            $("#msg").html(data.msg);
+                            $("#submit_info_btn").attr("disabled", true);
+                        }
+                    }
+                });
+            }
+        });
+    });
 </script>
 
 <body>
@@ -204,7 +239,7 @@
         <!--修改页面-->
         <form class="change_info" hidden="hidden" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="username_for_change">账号</label>
+                <label for="username_for_change">账号</label><span id="msg" style="padding-left: 30px;color: red"></span>
                 <input type="text" class="form-control" id="username_for_change">
             </div>
             <div class="form-group">
