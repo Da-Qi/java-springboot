@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../static/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .top_banner {
+        background: url("../static/images/head_back.png") repeat-x 5px;
+        width: 100%;
+    }
+
+    .user_img {
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+    }
+
+    .header_user {
+        height: 500px;
+        width: 15%;
+        padding-left: 3%;
+        float: left;
+    }
+
+    .user_img_div {
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        padding: 5px;
+        float: left;
+        align-content: center;
+        width: 150px;
+        height: 150px;
+    }
+
+    .user_navigate {
+        padding-top: 20%;
+        padding-left: 10%;
+        float: left;
+        align-content: center;
+    }
+
+    .user_content {
+        height: 1000px;
+        width: 95%;
+    }
+
+    .user_personalInfo {
+        float: left;
+        padding-left: 10px;
+        padding-top: 50px;
+        width: 70%;
+        margin-left: 50px;
+    }
+</style>
+
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    $(document).ready(function () {
+        /*获取个人信息*/
+        $.ajax({
+            url: "user/info",
+            type: "get",
+            data: {
+                'nickname': getCookie('nickname')
+            },
+            success: function (data) {
+                $("#username").val(data.username);
+                $("#nickname").val(data.nickname);
+                $("#telephone").val(data.telephone);
+                $("#gender").val(data.gender);
+                $("#user_img").attr('src','../static'+data.img_url);
+            }
+        });
+
+
+        $("#change_info_btn").click(function () {
+            $("#username_for_change").val($("#username").val());
+            $("#nickname_for_change").val($("#nickname").val());
+            $("#telephone_for_change").val($("#telephone").val());
+            if ($("#gender").val() === '男') {
+                $("#genderRadio1").prop("checked", "checked");
+            } else {
+                $("#genderRadio2").prop("checked", "checked");
+            }
+            $("form.change_info").show();
+            $("form.show_info").hide();
+        });
+
+        $("#cancel_info_btn").click(function () {
+            location.href = "personal.html";
+        });
+
+        $("#submit_info_btn").click(function () {
+            var file = $("#fileupload");
+            var items = file[0].files;
+            var formData = new FormData();
+            formData.append(items[0].name,items[0]);
+            $.ajax({
+                type: "post",
+                url: "/user/update_image",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    alert("发送图片了");
+                }
+            });
+            $.ajax({
+                type: "post",
+                url: "/user/update_info",
+                data: {
+                    'username': $("#username_for_change").val(),
+                    'nickname': $("#nickname_for_change").val(),
+                    'telephone': $("#telephone_for_change").val(),
+                    'gender': $("#gender_for_change").val()
+                },
+                contentType: 'application/json',
+                success: function (res) {
+                    alert("发送信息了");
+                }
+            });
+            //修改信息后刷新页面
+            location.reload();
+        });
+
+    });
+
+</script>
+
+<body>
+<div class="top_banner"></div>
+
+<hr style="border: #ffc900 solid" width="100%" size="2px" align="center"/>
+
+<div class="user_content">
+    <div class="header_user">
+
+        <div class="user_img_div">
+            <img class="user_img" id="user_img" src="../static/image_user/boy_default.jpg" alt="">
+        </div>
+
+        <div class="user_navigate">
+            <div class="btn-group-vertical" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">个人信息</button>
+                <button type="button" class="btn btn-default">发帖</button>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Dropdown link</a></li>
+                        <li><a href="#">Dropdown link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user_personalInfo">
+        <!--展示页面-->
+        <form class="show_info">
+            <div class="form-group">
+                <label for="username">账号</label>
+                <input type="text" class="form-control" id="username" disabled="disabled">
+            </div>
+            <div class="form-group">
+                <label for="nickname">昵称</label>
+                <input type="text" class="form-control" id="nickname" disabled="disabled">
+            </div>
+            <div class="form-group">
+                <label for="telephone">电话号码</label>
+                <input type="tel" class="form-control" id="telephone" disabled="disabled">
+            </div>
+            <div class="form-group">
+                <label for="gender">性别</label>
+                <input type="tel" class="form-control" id="gender" disabled="disabled">
+            </div>
+            <div style="text-align: center;margin-top: 20px">
+                <button type="button" class="btn btn-info" id="change_info_btn">修改信息</button>
+            </div>
+        </form>
+        <!--修改页面-->
+        <form class="change_info" hidden="hidden" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="username_for_change">账号</label>
+                <input type="text" class="form-control" id="username_for_change">
+            </div>
+            <div class="form-group">
+                <label for="nickname_for_change">昵称</label>
+                <input type="text" class="form-control" id="nickname_for_change">
+            </div>
+            <div class="form-group">
+                <label for="telephone_for_change">电话号码</label>
+                <input type="tel" class="form-control" id="telephone_for_change">
+            </div>
+
+            <div class="form-group" style="display: inline-grid">
+                <label>性别</label>
+                <label style="margin-left: 10px">
+                    <input type="radio" name="blankRadio" id="genderRadio1" value="男"> 男
+                    <input type="radio" name="blankRadio" id="genderRadio2" value="女" style="margin-left: 20px"> 女
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="fileupload">头像</label>
+                <input type="file" id="fileupload" accept="image/*" name="file">
+                <p class="help-block">选择您心仪的图片当做头像吧</p>
+            </div>
+
+            <div style="margin-top: 40px">
+                <!-- Contextual button for informational alert messages -->
+                <button type="button" class="btn btn-info" style="margin-left: 35%" id="cancel_info_btn">取消</button>
+                <button type="button" class="btn btn-success" style="margin-left: 15%" id="submit_info_btn">确认修改
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--导入布局js，共享header和footer-->
+<script type="text/javascript" src="../static/js/include.js"></script>
+</body>
+<div id="footer"></div>
+</html>

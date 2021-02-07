@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhao.mapper.UserMapper">
+
+    <insert id="registerUser" parameterType="user">
+        insert into user (user_id,user_name,user_password,user_nickname,user_telephone,user_gender,user_img_url,user_register_time,user_status) values
+        (null,#{user_name},#{user_password},#{user_nickname},#{user_telephone},#{user_gender},#{user_img_url},#{user_register_time},0);
+    </insert>
+
+    <select id="findUserByName" parameterType="string" resultType="user">
+        select * from user where user_name = #{username};
+    </select>
+
+    <select id="findUserByUsernameAndPassword" resultType="user">
+        select * from user where user_name = #{username} and user_password = #{password};
+    </select>
+
+    <select id="findUserByNickName" resultType="user">
+        select * from user where user_nickname = #{nickname};
+    </select>
+    
+    <update id="changeUserImageUrl">
+        update user set user_img_url = #{imageUrl} where user_id = #{user_id};
+    </update>
+
+</mapper>
