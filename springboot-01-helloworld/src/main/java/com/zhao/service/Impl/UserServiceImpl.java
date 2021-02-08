@@ -43,4 +43,14 @@ public class UserServiceImpl implements UserService {
         System.out.println("count=" + count);
         return count != 0;
     }
+
+    @Override
+    public boolean updateUser(User user) {
+        try {
+            userMapper.updateUser(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

@@ -85,6 +85,7 @@
                 'nickname': getCookie('nickname')
             },
             success: function (data) {
+                $("#user_id").val(data.user_id);
                 $("#username").val(data.username);
                 $("#nickname").val(data.nickname);
                 $("#telephone").val(data.telephone);
@@ -113,11 +114,10 @@
 
         $("#submit_info_btn").click(function () {
             alert("我被点了");
-            var file = $("#fileupload");
-            if (file == null) {
-                var items = file[0].files;
+            var file = $("#fileupload").get(0).files[0];
+            if (file) {
                 var formData = new FormData();
-                formData.append(items[0].name, items[0]);
+                formData.append(file.name, file);
                 $.ajax({
                     type: "post",
                     url: "/user/update_image",
@@ -133,12 +133,14 @@
             $.ajax({
                 type: "post",
                 url: "/user/update_info",
-                data: {
+                dataType: 'json',
+                data: JSON.stringify({
+                    'user_id': $("#user_id").val(),
                     'username': $("#username_for_change").val(),
                     'nickname': $("#nickname_for_change").val(),
                     'telephone': $("#telephone_for_change").val(),
-                    'gender': $("#gender_for_change").val()
-                },
+                    'gender': $("input[name='blankRadio']:checked").val()
+                }),
                 contentType: 'application/json',
                 success: function (res) {
                     alert("发送信息了");
@@ -180,6 +182,10 @@
                 });
             }
         });
+
+        $("#personal_info_btn").click(function () {
+            location.href = 'personal.html';
+        })
     });
 </script>
 
@@ -189,6 +195,7 @@
 <hr style="border: #ffc900 solid" width="100%" size="2px" align="center"/>
 
 <div class="user_content">
+    <input id="user_id" type="hidden">
     <div class="header_user">
 
         <div class="user_img_div">
@@ -197,7 +204,7 @@
 
         <div class="user_navigate">
             <div class="btn-group-vertical" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">个人信息</button>
+                <button type="button" class="btn btn-default" id="personal_info_btn">个人信息</button>
                 <button type="button" class="btn btn-default">发帖</button>
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"

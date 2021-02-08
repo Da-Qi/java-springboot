@@ -24,5 +24,13 @@
     <update id="changeUserImageUrl">
         update user set user_img_url = #{imageUrl} where user_id = #{user_id};
     </update>
+    
+    <update id="updateUser" parameterType="user">
+        update user set  user_name = #{user_name},
+          user_nickname = #{user_nickname},
+          user_telephone = #{user_telephone},
+          user_gender = #{user_gender}
+          where user_id = #{user_id};
+    </update>
 
 </mapper>

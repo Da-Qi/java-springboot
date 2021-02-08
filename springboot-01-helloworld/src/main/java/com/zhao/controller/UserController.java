@@ -110,6 +110,7 @@ public class UserController {
         User user = userService.findUserByNickName(request.getParameter("nickname"));
         // session存入user，达到登录后的效果
         session.setAttribute("user", user);
+        jsonObject.put("user_id",user.user_id);
         jsonObject.put("username", user.user_name);
         jsonObject.put("nickname", user.user_nickname);
         jsonObject.put("gender", user.user_gender);
@@ -138,11 +139,28 @@ public class UserController {
     @RequestMapping(value = "/user/update_info", produces = "application/json;charset=utf-8")
     public String userUpdate(@RequestBody JSONObject jsonObject) {
         JSONObject resultObject = new JSONObject();
+        String user_id = jsonObject.getString("user_id");
+        System.out.println("user_id= " + user_id);
         String username = jsonObject.getString("username");
         String nickname = jsonObject.getString("nickname");
         String telephone = jsonObject.getString("telephone");
         String gender = jsonObject.getString("gender");
-        return "hello";
+        User user = new User();
+        user.setUser_id(Long.parseLong(user_id));
+        user.setUser_name(username);
+        user.setUser_nickname(nickname);
+        user.setUser_telephone(telephone);
+        user.setUser_gender(gender);
+        //更新用户对象
+        boolean flag = userService.updateUser(user);
+        if (flag){
+            resultObject.put("flag",true);
+            resultObject.put("msg","修改成功！");
+        }else {
+            resultObject.put("flag",false);
+            resultObject.put("msg","修改失败！");
+        }
+        return resultObject.toString();
 
     }
 
