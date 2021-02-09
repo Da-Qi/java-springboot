@@ -1,7 +1,9 @@
 package com.zhao.config;
 
+import com.zhao.component.LoginHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,6 +19,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login.html").setViewName("login");
         registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/personal.html").setViewName("personal");
+        registry.addViewController("/admin/index").setViewName("admin/1");
 
     }
 
@@ -30,8 +33,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
         return new ResourceUrlEncodingFilter();
     }
 
-    //    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/login.html","/","/user/login");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/personal.html");
+    }
 }

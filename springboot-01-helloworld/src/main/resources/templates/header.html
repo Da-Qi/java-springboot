@@ -45,6 +45,17 @@
         // 跳转路径 http://localhost/travel/route_list.html?cid=5，拼接上rname=xxx
         location.href = "http://localhost/travel/route_list.html?cid=" + cid + "&rname=" + rname;
     });
+
+    $(function () {
+        var pathname = window.location.pathname;
+        if (pathname === '/personal.html'){
+            $("#show_personal").hide();
+            $("#show_index").show();
+        }else {
+            $("#show_personal").show();
+            $("#show_index").hide();
+        }
+    })
 </script>
 
 <style>
@@ -82,19 +93,20 @@
         <div class="login" id="after_login" hidden>
             <span id="span_username" style="color: #ff9900"></span>
             <a id="exit" style="float: right;margin-right: 20px">退出</a>
-            <a href="personal.html" style="float: right;margin-right: 20px">个人中心</a>
+            <a href="personal.html" style="float: right;margin-right: 20px" id="show_personal">个人中心</a>
+            <a href="index.html" style="float: right;margin-right: 20px" hidden="hidden" id="show_index">首页</a>
 
         </div>
     </div>
     <div class="header_wrap">
         <div class="topbar">
             <div class="logo">
-                <a href="index.jsp"><img src="../static/images/logo_2.png" alt="" width="200px" height="80px"></a>
+                <a href="index.html"><img src="../static/images/logo_2.png" alt="" width="200px" height="80px"></a>
             </div>
             <div class="search">
                 <input name="" id="search_input" type="text" placeholder="请输入路线名称" class="search_input"
                        autocomplete="off">
-                <a href="route_list.jsp" id="search-button" class="search-button">搜索</a>
+                <a href="route_list.html" id="search-button" class="search-button">搜索</a>
             </div>
             <div class="hottel">
                 <div class="hot_pic">
@@ -112,15 +124,15 @@
 <!-- 首页导航 -->
 <div class="navitem" style="text-align: center">
     <ul id="category" class="nav" style="text-align: center">
-        <li class="nav-active"><a href="index.jsp">首页</a></li>
-        <li><a href="route_beijing.jsp">北京</a></li>
-        <li><a href="route_hongkong.jsp">香港</a></li>
-        <li><a href="route_northAmerican.jsp">北美</a></li>
-        <li><a href="route_yunnan.jsp">云南</a></li>
-        <li><a href="route_Macao.jsp">澳门</a></li>
-        <li><a href="route_team.jsp">组队游</a></li>
-        <li><a href="route_global.jsp">全球自由行</a></li>
-        <li><a href="favoriterank.jsp">收藏排行榜</a></li>
+        <li class="nav-active"><a href="index.html">首页</a></li>
+        <li><a href="route/beijing.html">北京</a></li>
+        <li><a href="route/hongkong.html">香港</a></li>
+        <li><a href="route/northAmerican.html">北美</a></li>
+        <li><a href="route/yunnan.html">云南</a></li>
+        <li><a href="route/Macao.html">澳门</a></li>
+        <li><a href="route/team.html">组队游</a></li>
+        <li><a href="route/global.html">全球自由行</a></li>
+        <li><a href="favoriterank.html">收藏排行榜</a></li>
     </ul>
 </div>
 
