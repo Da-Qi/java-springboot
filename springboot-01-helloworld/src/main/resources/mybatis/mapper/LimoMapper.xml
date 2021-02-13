@@ -3,12 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhao.mapper.LimoMapper">
-    <select id="selectAll" resultType="com.zhao.pojo.Limo">
+    <select id="selectAll" resultType="limo">
         select * from limo
     </select>
 
-    <select id="selectByType" resultType="com.zhao.pojo.Limo">
+    <select id="selectByType" resultType="limo">
         select * from  limo where type = #{type}
     </select>
+
+    <select id="getLimoPopularity" resultType="limo">
+        SELECT * FROM limo ORDER BY like_number DESC LIMIT 4;
+    </select>
+
+    <select id="getLimoNewest" resultType="limo">
+        SELECT * FROM limo ORDER BY add_time DESC LIMIT 4;
+    </select>
+
+    <select id="getLimoTheme" resultType="limo">
+        select * from limo as t1 where t1.id >= (rand()*(select max(id)-4 from limo)) limit 4;
+    </select>
+
 
 </mapper>

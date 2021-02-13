@@ -11,5 +11,15 @@ import java.util.List;
 public interface LimoMapper {
     List<Limo> selectAll();
 
+    //请求不同类型的房车，配合分页
     List<Limo> selectByType(String type);
+
+    //请求首页的人气排行房车
+    List<Limo> getLimoPopularity();
+
+    //请求首页的最新房车
+    List<Limo> getLimoNewest();
+
+    //请求首页的主题房车
+    List<Limo> getLimoTheme();
 }

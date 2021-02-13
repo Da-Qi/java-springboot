@@ -39,7 +39,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="../static/images/banner_1.JPG" alt="" >
+                <img src="../static/images/banner_1.JPG" alt="">
             </div>
             <div class="item">
                 <img src="../static/images/banner_2.JPG" alt="">
@@ -77,142 +77,70 @@
                     <span><a href="#newest" aria-controls="newest" role="tab" data-toggle="tab">最新房车</a></span>
                 </li>
                 <li role="presentation">
-                    <span><a href="#theme" aria-controls="theme" role="tab" data-toggle="tab">主题房车</a></span>
+                    <span><a href="#theme" aria-controls="theme" role="tab" data-toggle="tab" class="themeLimo">主题房车</a></span>
                 </li>
             </ul>
         </div>
-<script>
+        <script>
+            function decodeAjax(data) {
+                var html = `<div class="row">`;
+                $.each(data, function (k, v) {
+                    html += `<div class="col-md-3"><a href="javascript:;">` +
+                        `<img src="../static${data[k].img_url}" alt="">` +
+                        `<div class="has_border">` +
+                        `<h3>${data[k].name}</h3>` +
+                        `<div class="price">` +
+                        `网付价<em>￥</em><strong>${data[k].rent}</strong><em>起</em>` +
+                        `<span style="padding-left: 40%"><span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span> ${data[k].like_number}</span>` +
+                        `</div>
+                                </div>
+                            </a>
+                        </div>`;
+                })
+                html += `</div>`;
+                return html;
+            }
 
-</script>
+            $(function () {
+                $.ajax({
+                    url: '/limo/popularity',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#popularity").append(decodeAjax(data));
+                    }
+                });
+
+                $.ajax({
+                    url: '/limo/newest',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#newest").append(decodeAjax(data));
+                    }
+                });
+
+                $.ajax({
+                    url: '/limo/theme',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#theme").append(decodeAjax(data));
+                    }
+                });
+            })
+        </script>
         <div class="jx_content">
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="popularity">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/hotest1.png" alt="">
-                                <div class="has_border">
-                                    <h3>蜜月/浪漫自由行</h3>
-                                    <div class="price">网付价<em>￥</em><strong>399</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/hotest2.png" alt="">
-                                <div class="has_border">
-                                    <h3>山川/休闲自由行</h3>
-                                    <div class="price">网付价<em>￥</em><strong>350</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/hotest3.png" alt="">
-                                <div class="has_border">
-                                    <h3>海边/唯美自由行</h3>
-                                    <div class="price">网付价<em>￥</em><strong>360</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/hotest4.png" alt="">
-                                <div class="has_border">
-                                    <h3>草原/恬静自由行</h3>
-                                    <div class="price">网付价<em>￥</em><strong>249</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <div role="tabpanel" class="tab-pane active" id="popularity"></div>
 
-                <div role="tabpanel" class="tab-pane" id="newest">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/new1.png" alt="">
-                                <div class="has_border">
-                                    <h3>B310舒适版</h3>
-                                    <div class="price">网付价<em>￥</em><strong>699</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/new2.png" alt="">
-                                <div class="has_border">
-                                    <h3>C533豪华版双拓展</h3>
-                                    <div class="price">网付价<em>￥</em><strong>899</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/new3.png" alt="">
-                                <div class="has_border">
-                                    <h3>C310纵置床</h3>
-                                    <div class="price">网付价<em>￥</em><strong>699</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/new4.png" alt="">
-                                <div class="has_border">
-                                    <h3>C630尊享版无拓展</h3>
-                                    <div class="price">网付价<em>￥</em><strong>1199</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <div role="tabpanel" class="tab-pane" id="newest"></div>
 
-                <div role="tabpanel" class="tab-pane" id="theme">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/theme1.png" alt="">
-                                <div class="has_border">
-                                    <h3>时光旅程</h3>
-                                    <div class="price">网付价<em>￥</em><strong>599</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/theme2.png" alt="">
-                                <div class="has_border">
-                                    <h3>可爱亲子</h3>
-                                    <div class="price">网付价<em>￥</em><strong>599</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/theme3.png" alt="">
-                                <div class="has_border">
-                                    <h3>清新简约</h3>
-                                    <div class="price">网付价<em>￥</em><strong>499</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:;">
-                                <img src="../static/image_docx/theme4.png" alt="">
-                                <div class="has_border">
-                                    <h3>豪华商务</h3>
-                                    <div class="price">网付价<em>￥</em><strong>699</strong><em>起</em></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <div role="tabpanel" class="tab-pane" id="theme"></div>
             </div>
         </div>
     </section>
-    <!-- 黑马精选end-->
     <!-- 国内游 start-->
     <section class="hemai_jx">
         <div class="jx_top">
@@ -299,7 +227,7 @@
         </div>
         <div class="heima_gn">
             <div class="guonei_l">
-                <img src="../static/images/house_32.jpg" alt="" width="380px" >
+                <img src="../static/images/house_32.jpg" alt="" width="380px">
             </div>
             <div class="guone_r">
                 <div class="row">

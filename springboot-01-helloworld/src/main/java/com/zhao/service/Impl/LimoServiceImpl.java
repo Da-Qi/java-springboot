@@ -24,4 +24,19 @@ public class LimoServiceImpl implements LimoService {
         PageResult pageResult = PageUtils.getPageResult(new PageInfo<>(limos));
         return pageResult.getContent();
     }
+
+    @Override
+    public List<Limo> getLimoPopularity() {
+        return limoMapper.getLimoPopularity();
+    }
+
+    @Override
+    public List<Limo> getLimoNewest() {
+        return limoMapper.getLimoNewest();
+    }
+
+    @Override
+    public List<Limo> getLimoTheme() {
+        return limoMapper.getLimoTheme();
+    }
 }

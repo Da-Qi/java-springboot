@@ -16,4 +16,6 @@ public class Limo {
     public int merchant_id;
     public String details;
     public LimoType type;
+    public int like_number;
+    public String add_time;
 }
