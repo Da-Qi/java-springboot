@@ -2,8 +2,10 @@ package com.zhao;
 
 import com.zhao.mapper.LimoMapper;
 import com.zhao.pojo.Limo;
+import com.zhao.pojo.Merchant;
 import com.zhao.pojo.PageRequest;
 import com.zhao.service.LimoService;
+import com.zhao.service.MerchantService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,4 +34,12 @@ class Springboot01HelloworldApplicationTests {
         limos.forEach(limo -> System.out.println(limo));
     }
 
+
+    @Autowired
+    public MerchantService merchantService;
+    @Test
+    void test2() {
+        List<Merchant> merchants = merchantService.selectAll();
+        merchants.forEach(merchant -> System.out.println(merchant));
+    }
 }

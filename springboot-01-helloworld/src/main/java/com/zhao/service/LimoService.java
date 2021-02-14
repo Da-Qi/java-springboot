@@ -13,4 +13,6 @@ public interface LimoService {
     List<Limo> getLimoNewest();
 
     List<Limo> getLimoTheme();
+
+    Limo getLimoDetails(int id);
 }

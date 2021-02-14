@@ -23,5 +23,9 @@
         select * from limo as t1 where t1.id >= (rand()*(select max(id)-4 from limo)) limit 4;
     </select>
 
+    <select id="getLimoDetails" resultType="limo">
+        select * from  limo where id = #{id};
+    </select>
+
 
 </mapper>

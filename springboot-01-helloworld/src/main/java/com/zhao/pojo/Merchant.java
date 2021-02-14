@@ -4,19 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//房车
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Limo {
+public class Merchant {
     public int id;
     public String name;
-    public Double rent;
-    public String img_url;
-    public int merchant_id;
+    public String telephone;
+    public String place;
+    public String date;
     public String details;
-    public LimoType type;
-    public int like_number;
-    public String add_time;
-    public String img_details;
 }

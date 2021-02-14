@@ -22,4 +22,6 @@ public interface LimoMapper {
 
     //请求首页的主题房车
     List<Limo> getLimoTheme();
+
+    Limo getLimoDetails(int id);
 }

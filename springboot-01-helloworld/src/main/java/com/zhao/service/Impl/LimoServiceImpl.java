@@ -39,4 +39,9 @@ public class LimoServiceImpl implements LimoService {
     public List<Limo> getLimoTheme() {
         return limoMapper.getLimoTheme();
     }
+
+    @Override
+    public Limo getLimoDetails(int id) {
+        return limoMapper.getLimoDetails(id);
+    }
 }

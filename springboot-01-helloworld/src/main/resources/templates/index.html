@@ -82,10 +82,15 @@
             </ul>
         </div>
         <script>
+            function getLimoDetails(id) {
+                location.href="limo_details.html?id=" + id;
+            }
+
+            /*解析返回的json数据*/
             function decodeAjax(data) {
                 var html = `<div class="row">`;
                 $.each(data, function (k, v) {
-                    html += `<div class="col-md-3"><a href="javascript:;">` +
+                    html += `<div class="col-md-3"><a href="javascript:getLimoDetails(${data[k].id});">` +
                         `<img src="../static${data[k].img_url}" alt="">` +
                         `<div class="has_border">` +
                         `<h3>${data[k].name}</h3>` +
