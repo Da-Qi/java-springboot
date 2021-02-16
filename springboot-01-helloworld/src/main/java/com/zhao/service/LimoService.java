@@ -15,4 +15,8 @@ public interface LimoService {
     List<Limo> getLimoTheme();
 
     Limo getLimoDetails(int id);
+
+    boolean ifLimoFavorite(int limo_id, int user_id);
+
+    void addFavorite(int id, int user_id);
 }

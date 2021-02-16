@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeUserImageUrl(String imageUrl, long user_id) {
+    public void changeUserImageUrl(String imageUrl, int user_id) {
         userMapper.changeUserImageUrl(imageUrl,user_id);
     }
 

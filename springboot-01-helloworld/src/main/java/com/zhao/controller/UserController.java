@@ -97,6 +97,15 @@ public class UserController {
         return resultObject.toString();
     }
 
+
+    @RequestMapping(value = "/user/loginByCookie", produces = "application/json;charset=utf-8")
+    public void userLoginByCookie(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = userService.findUserByNickName(request.getParameter("nickname"));
+        session.setAttribute("user",user);
+    }
+
+
     @RequestMapping(value = "/exit")
     public void exit(HttpServletRequest request) {
         request.getSession().invalidate();
@@ -105,11 +114,7 @@ public class UserController {
     @RequestMapping(value = "/user/info", produces = "application/json;charset=utf-8")
     public String userInfo(HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
-        HttpSession session = request.getSession();
-        //session为空，用户通过cookie登录
         User user = userService.findUserByNickName(request.getParameter("nickname"));
-        // session存入user，达到登录后的效果
-        session.setAttribute("user", user);
         jsonObject.put("user_id",user.user_id);
         jsonObject.put("username", user.user_name);
         jsonObject.put("nickname", user.user_nickname);
@@ -146,7 +151,7 @@ public class UserController {
         String telephone = jsonObject.getString("telephone");
         String gender = jsonObject.getString("gender");
         User user = new User();
-        user.setUser_id(Long.parseLong(user_id));
+        user.setUser_id(Integer.parseInt(user_id));
         user.setUser_name(username);
         user.setUser_nickname(nickname);
         user.setUser_telephone(telephone);

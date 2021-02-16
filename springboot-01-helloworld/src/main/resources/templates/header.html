@@ -25,6 +25,7 @@
             $("#span_username").html(msg);
             $("#before_login").hide();
             $("#after_login").show();
+            $.get("user/loginByCookie",{'nickname': nickname});
         }
     });
 
@@ -125,7 +126,9 @@
 <div class="navitem" style="text-align: center">
     <ul id="category" class="nav" style="text-align: center">
         <li class="nav-active"><a href="index.html">首页</a></li>
-        <li><a href="route/beijing.html">北京</a></li>
+        <li><a href="theme.html">主题房车</a></li>
+        <li><a href="general.html">尊享房车</a></li>
+        <li><a href="beijing.html">北京</a></li>
         <li><a href="route/hongkong.html">香港</a></li>
         <li><a href="route/northAmerican.html">北美</a></li>
         <li><a href="route/yunnan.html">云南</a></li>

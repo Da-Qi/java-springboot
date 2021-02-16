@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhao.mapper.FavoriteMapper">
+    <select id="getLimos" resultType="string">
+        select limo_id from collection where user_id = #{user_id};
+    </select>
+
+    <update id="updateLimos">
+        update collection set limo_id = #{limos} where user_id = #{user_id};
+    </update>
+
+    <insert id="insertLimos">
+        insert into collection (`id`,
+             `limo_id`,
+             `route_id`,
+             `user_id`,
+             `collect_time`) values (null,#{limos},null,#{user_id},null);
+    </insert>
+</mapper>

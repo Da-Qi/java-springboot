@@ -3,6 +3,7 @@ package com.zhao.controller;
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.zhao.pojo.Limo;
 import com.zhao.pojo.Merchant;
+import com.zhao.pojo.User;
 import com.zhao.service.LimoService;
 import com.zhao.service.MerchantService;
 import net.sf.json.JSONArray;
@@ -90,5 +91,18 @@ public class LimoController {
         jsonObject.put("telephone",merchant.telephone);
         jsonObject.put("place",merchant.place);
         return jsonObject.toString();
+    }
+
+
+    @RequestMapping(value = "/limo/isFavorite", produces = "application/json;charset=utf-8")
+    public boolean ifLimoFavorite(@Param("id") int id,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        return limoService.ifLimoFavorite(id,user.user_id);
+    }
+
+    @RequestMapping(value = "/limo/addFavorite", produces = "application/json;charset=utf-8")
+    public void addFavorite(@Param("id") int id,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        limoService.addFavorite(id,user.user_id);
     }
 }
