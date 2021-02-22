@@ -2,11 +2,12 @@ package com.zhao.service;
 
 import com.zhao.pojo.Limo;
 import com.zhao.pojo.PageRequest;
+import com.zhao.pojo.PageResult;
 
 import java.util.List;
 
 public interface LimoService {
-    List<Limo> selectLimo(String type,PageRequest pageRequest);
+    PageResult selectLimo(String type, PageRequest pageRequest);
 
     List<Limo> getLimoPopularity();
 
@@ -19,4 +20,6 @@ public interface LimoService {
     boolean ifLimoFavorite(int limo_id, int user_id);
 
     void addFavorite(int id, int user_id);
+
+    void removeFavorite(int id, int user_id);
 }

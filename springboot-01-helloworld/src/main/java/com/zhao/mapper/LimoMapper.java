@@ -24,4 +24,10 @@ public interface LimoMapper {
     List<Limo> getLimoTheme();
 
     Limo getLimoDetails(int id);
+
+    //增加房车的喜欢数
+    void addLimoLikeNumber(int id);
+
+    //减少房车的喜欢数
+    void reduceLimoLikeNumber(int id);
 }

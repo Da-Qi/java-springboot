@@ -1,9 +1,7 @@
 package com.zhao.controller;
 
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
-import com.zhao.pojo.Limo;
-import com.zhao.pojo.Merchant;
-import com.zhao.pojo.User;
+import com.zhao.pojo.*;
 import com.zhao.service.LimoService;
 import com.zhao.service.MerchantService;
 import net.sf.json.JSONArray;
@@ -96,13 +94,59 @@ public class LimoController {
 
     @RequestMapping(value = "/limo/isFavorite", produces = "application/json;charset=utf-8")
     public boolean ifLimoFavorite(@Param("id") int id,HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
-        return limoService.ifLimoFavorite(id,user.user_id);
+        try {
+            User user = (User) request.getSession().getAttribute("user");
+            return limoService.ifLimoFavorite(id,user.user_id);
+        }catch (Exception e){
+            System.out.println("需要用户回到首页");
+            return false;
+        }
     }
 
     @RequestMapping(value = "/limo/addFavorite", produces = "application/json;charset=utf-8")
     public void addFavorite(@Param("id") int id,HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
         limoService.addFavorite(id,user.user_id);
+    }
+
+    @RequestMapping(value = "/limo/removeFavorite", produces = "application/json;charset=utf-8")
+    public void removeFavorite(@Param("id") int id,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        limoService.removeFavorite(id,user.user_id);
+    }
+
+    //查询不同类型的房车列表
+    @RequestMapping(value = "/limo/pageQuery", produces = "application/json;charset=utf-8")
+    public String limoPageQuery(HttpServletRequest request){
+        String currentPage = request.getParameter("currentPage");
+        if (currentPage.equals("")){
+            currentPage = "1";
+        }
+        String name = request.getParameter("name");
+        PageRequest pageRequest = new PageRequest();
+        pageRequest.setPageNum(Integer.parseInt(currentPage));
+        // 每页显示6条数据
+        pageRequest.setPageSize(6);
+        // 获得查询结果
+        PageResult pageResult = limoService.selectLimo(name, pageRequest);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("totalPage",pageResult.getTotalPages());
+        jsonObject.put("totalCount",pageResult.getTotalSize());
+        jsonObject.put("currentPage",pageResult.getPageNum());
+
+        JSONArray jsonArray = new JSONArray();
+        List<Limo> result = pageResult.getContent();
+        result.forEach(limo -> {
+            JSONObject limoObject = new JSONObject();
+            limoObject.put("image",limo.img_url);
+            limoObject.put("name",limo.name);
+            limoObject.put("details",limo.details);
+            limoObject.put("price",limo.rent);
+            limoObject.put("id",limo.id);
+            jsonArray.add(limoObject);
+        });
+        jsonObject.put("list",jsonArray);
+        return jsonObject.toString();
     }
 }
