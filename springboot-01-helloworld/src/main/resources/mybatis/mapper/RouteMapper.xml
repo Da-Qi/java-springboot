@@ -6,4 +6,20 @@
     <select id="selectRouteByPlace" resultType="route">
         select * from route where place = #{place}
     </select>
+
+    <select id="getRouteDetails" resultType="route">
+        select * from  route where id = #{id}
+    </select>
+
+    <select id="selectRouteFavoriteRank" resultType="route">
+        select * from route order by like_number desc
+    </select>
+
+    <update id="addRouteLikeNumber">
+        update route set like_number = like_number + 1 where id = #{id};
+    </update>
+
+    <update id="reduceRouteLikeNumber">
+        update route set like_number = like_number - 1 where id = #{id};
+    </update>
 </mapper>

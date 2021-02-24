@@ -35,4 +35,7 @@
         update limo set like_number = like_number - 1 where id = #{id};
     </update>
 
+    <select id="getLimoRecommend" resultType="limo">
+        SELECT * FROM limo AS t1 WHERE t1.`id` IN (SELECT id FROM (SELECT id FROM limo AS t2 WHERE t2.`type` = 'GENERAL' ORDER BY t2.like_number DESC LIMIT 10) AS t3);
+    </select>
 </mapper>

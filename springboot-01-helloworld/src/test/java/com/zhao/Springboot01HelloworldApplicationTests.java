@@ -49,6 +49,6 @@ class Springboot01HelloworldApplicationTests {
     public RouteService routeService;
     @Test
     void test3() {
-        routeService.selectRouteByPlace('beijing')
+       
     }
 }

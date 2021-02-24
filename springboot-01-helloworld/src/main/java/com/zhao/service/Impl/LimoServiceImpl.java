@@ -55,7 +55,14 @@ public class LimoServiceImpl implements LimoService {
         if (limos == null) {
             return false;
         } else {
-            return limos.contains(String.valueOf(limo_id));
+            String[] split = limos.split(";");
+            boolean flag = false;
+            for (String s : split) {
+                if (s.equals(String.valueOf(limo_id))){
+                    flag = true;
+                }
+            }
+            return flag;
         }
     }
 
@@ -64,11 +71,20 @@ public class LimoServiceImpl implements LimoService {
     public void addFavorite(int id, int user_id) {
         String limos = favoriteMapper.getLimos(user_id);
         if (limos == null) {
-            //该用户还没有开始收藏房车
+            //查看该用户是否存在于收藏表中
+            int i = favoriteMapper.ifUserExists(user_id);
             limos = String.valueOf(id);
-            favoriteMapper.insertLimos(limos, user_id);
+            if (i == 0){
+                //该用户不存在，插入数据
+                //该用户还没有开始收藏房车
+                favoriteMapper.insertLimos(limos, user_id);
+            }else {
+                //用户已经存在，更新即可
+                favoriteMapper.updateLimos(limos,user_id);
+            }
+
         } else {
-            //已经收藏了用户
+            //用户已经收藏了
             limos += ";" + id;
             favoriteMapper.updateLimos(limos, user_id);
         }
@@ -94,5 +110,10 @@ public class LimoServiceImpl implements LimoService {
 
         //房车的相应收藏数发生变更
         limoMapper.reduceLimoLikeNumber(id);
+    }
+
+    @Override
+    public List<Limo> getLimoRecommend() {
+        return limoMapper.getLimoRecommend();
     }
 }

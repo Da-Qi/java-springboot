@@ -30,4 +30,7 @@ public interface LimoMapper {
 
     //减少房车的喜欢数
     void reduceLimoLikeNumber(int id);
+
+    //请求侧边栏的推荐房车
+    List<Limo> getLimoRecommend();
 }

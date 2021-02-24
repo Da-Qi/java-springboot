@@ -34,7 +34,6 @@ a {
   font-size: 16px;
 }
 .page_one .xinxi .left {
-  width: 890px;
   float: left;
 }
 .page_one .xinxi .left .header {
@@ -109,65 +108,4 @@ a {
 }
 .page_one .xinxi .left .page_num_inf span {
   color: #ff4848;
-}
-.page_one .xinxi > .right {
-  width: 244px;
-  height: 460px;
-  float: right;
-  background-color: #f7f7f7;
-  padding: 8px;
-  padding-top: 0;
-  font-size: 14px;
-}
-.page_one .xinxi > .right .top {
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  border-bottom: 2px solid #eee;
-  margin-bottom: 8px;
-}
-.page_one .xinxi > .right .top .hot {
-  float: left;
-  color: #ff4848;
-  margin-right: 7px;
-  line-height: 38px;
-  border-bottom: 4px solid #ff4848;
-}
-.page_one .xinxi > .right ul li {
-  width: 100%;
-  height: 72px;
-  border: 1px solid #eee;
-  margin-bottom: 10px;
-  font-size: 12px;
-  overflow: hidden;
-  background-color: #fff;
-}
-.page_one .xinxi > .right ul li .left {
-  float: left;
-  width: 50%;
-}
-.page_one .xinxi > .right ul li .left img {
-  width:100%;
-}
-.page_one .xinxi > .right ul li .right {
-  width: 50%;
-  float: right;
-  padding-left: 4px;
-  box-sizing: border-box;
-  padding-top: 7px;
-}
-.page_one .xinxi > .right ul li .right p:nth-of-type(1) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  font-weight: bold;
-  margin-bottom: 3px;
-}
-.page_one .xinxi > .right ul li .right p > span {
-  font-size: 16px;
-  color: #ff4848;
-  font-weight: bold;
-  margin-left: 2px;
 }

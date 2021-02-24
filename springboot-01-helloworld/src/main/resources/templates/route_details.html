@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>房车详情</title>
+    <title>路线详情</title>
     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" type="text/css" href="../static/css/limo-details.css">
@@ -18,12 +18,9 @@
 <script>
     $(function () {
         var place = getParameter("place");
-        if (place === null) {
-            place = 'index';
-        }
         var id = getParameter("id");
         $.ajax({
-            url: "limo/" + place + "/" + id,
+            url: "route/" + place + "/" + id,
             type: "get",
             success: function (data) {
                 $("#bread_box_first").html(data.breadcrumb);
@@ -31,13 +28,14 @@
                 $(".big_img").attr("src", "../static" + data.img_url);
                 //存储大图的信息
                 $(".store_big_img").val("../static" + data.img_url);
-                if (data.img_details != null && data.img_details !== 'NULL') {
+                //判空处理
+                if (data.img_details != null){
                     var img_details = data.img_details.split(";");
                     var html = `<a class="up_img up_img_disable"></a>`;
                     $.each(img_details, function (index) {
                         html += `<a title="" class="little_img" data-bigpic="../static${img_details[index]}">
                     <img src="../static${img_details[index]}">
-                </a>`;
+                    </a>`;
                     })
                     html += `<a class="down_img down_img_disable" style="margin-bottom: 0;"></a>`;
                 }
@@ -59,7 +57,7 @@
         //收藏相关的方法
         // 发送请求，判断用户是否收藏过该房车
         var id = getParameter("id");
-        $.get("limo/isFavorite", {'id': id}, function (flag) {
+        $.get("route/isFavorite", {id: id}, function (flag) {
             if (flag) {
                 // 用户已经收藏过
                 //<a  class="btn already" disabled="disabled">
@@ -78,13 +76,13 @@
     function goImg() {
         //焦点图效果
         //点击图片切换图片
-        $("#dd").on("mousemove", ".little_img", function () {
+        $("#dd").on("mousemove",".little_img",function () {
             $('.little_img').removeClass('cur_img');
             var little_pic = $(this).data('bigpic');
             $('.big_img').attr('src', little_pic);
             $(this).addClass('cur_img');
         });
-        $("#dd").on("mouseleave", ".little_img", function () {
+        $("#dd").on("mouseleave",".little_img",function () {
             $('.big_img').attr('src', $(".store_big_img").val());
             $('.little_img').removeClass('cur_img');
         });
@@ -115,13 +113,12 @@
     function addFavorite() {
         var id = getParameter("id");
         if ($("#favorite").hasClass("already")) {
-            $.get("limo/removeFavorite", {'id': id}, function () {
+            $.get("route/removeFavorite", {'id': id}, function () {
                 //代码刷新页面
                 location.reload();
             });
         } else {
-            $.get("limo/addFavorite", {'id': id}, function (flag) {
-                //代码刷新页面
+            $.get("route/addFavorite", {'id': id}, function (flag) {
                 if (!flag){
                     alert("您还未登录，无法执行此操作哦~");
                 }else {
@@ -150,7 +147,7 @@
     <div class="prosum_box">
         <dl class="prosum_left">
             <dt>
-                <img alt="" class="big_img" src="">
+                <img alt="" class="big_img" src="../static/images/house_18.jpg">
             </dt>
             <dd id="dd">
             </dd>

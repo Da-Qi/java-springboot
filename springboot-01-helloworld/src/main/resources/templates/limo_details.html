@@ -17,22 +17,31 @@
 </head>
 <script>
     $(function () {
+        var place = getParameter("place");
+        if (place === null) {
+            place = 'index';
+        }
+        var id = getParameter("id");
         $.ajax({
-            url: "limo/index" + window.location.search,
+            url: "limo/" + place + "/" + id,
             type: "get",
-            dataType: "json",
             success: function (data) {
                 $("#bread_box_first").html(data.breadcrumb);
                 $("#bread_box_second").html(data.name);
                 $(".big_img").attr("src", "../static" + data.img_url);
-                var img_details = data.img_details.split(";");
-                var html = `<a class="up_img up_img_disable"></a>`;
-                $.each(img_details, function (index) {
-                    html += `<a title="" class="little_img" data-bigpic="../static${img_details[index]}">
+                //存储大图的信息
+                $(".store_big_img").val("../static" + data.img_url);
+                if (data.img_details != null && data.img_details !== 'NULL') {
+                    var img_details = data.img_details.split(";");
+                    var html = `<a class="up_img up_img_disable"></a>`;
+                    $.each(img_details, function (index) {
+                        html += `<a title="" class="little_img" data-bigpic="../static${img_details[index]}">
                     <img src="../static${img_details[index]}">
                 </a>`;
-                })
-                html += `<a class="down_img down_img_disable" style="margin-bottom: 0;"></a>`;
+                    })
+                    html += `<a class="down_img down_img_disable" style="margin-bottom: 0;"></a>`;
+                }
+
                 /*存入小图片框中*/
                 $("#dd").html(html);
                 $("#name").html(data.name);
@@ -41,7 +50,7 @@
                 $("#merchant_phone").html(data.telephone);
                 $("#address").html(data.place);
                 $("#price").html("¥" + data.rent);
-                $("#favoriteCount").html("已收藏" + data.like_number +"次");
+                $("#favoriteCount").html("已收藏" + data.like_number + "次");
             }
         });
 
@@ -50,7 +59,7 @@
         //收藏相关的方法
         // 发送请求，判断用户是否收藏过该房车
         var id = getParameter("id");
-        $.get("limo/isFavorite", {id: id}, function (flag) {
+        $.get("limo/isFavorite", {'id': id}, function (flag) {
             if (flag) {
                 // 用户已经收藏过
                 //<a  class="btn already" disabled="disabled">
@@ -65,14 +74,19 @@
             }
         });
     })
+
     function goImg() {
         //焦点图效果
         //点击图片切换图片
-        $("#dd").on("mousemove",".little_img",function () {
+        $("#dd").on("mousemove", ".little_img", function () {
             $('.little_img').removeClass('cur_img');
-            var big_pic = $(this).data('bigpic');
-            $('.big_img').attr('src', big_pic);
+            var little_pic = $(this).data('bigpic');
+            $('.big_img').attr('src', little_pic);
             $(this).addClass('cur_img');
+        });
+        $("#dd").on("mouseleave", ".little_img", function () {
+            $('.big_img').attr('src', $(".store_big_img").val());
+            $('.little_img').removeClass('cur_img');
         });
         //上下切换
         var picindex = 0;
@@ -100,20 +114,24 @@
     //点击收藏按钮触发的方法
     function addFavorite() {
         var id = getParameter("id");
-        if ($("#favorite").hasClass("already")){
-            $.get("limo/removeFavorite", {id: id}, function () {
+        if ($("#favorite").hasClass("already")) {
+            $.get("limo/removeFavorite", {'id': id}, function () {
                 //代码刷新页面
                 location.reload();
             });
-        }else {
-            $.get("limo/addFavorite", {id: id}, function () {
+        } else {
+            $.get("limo/addFavorite", {'id': id}, function (flag) {
                 //代码刷新页面
-                location.reload();
+                if (!flag){
+                    alert("您还未登录，无法执行此操作哦~");
+                }else {
+                    alert("收藏成功！");
+                    location.reload();
+                }
             });
         }
 
     }
-
 
 
 </script>
@@ -121,6 +139,7 @@
 <!--引入头部-->
 <div id="header"></div>
 <!-- 详情 start -->
+<span hidden="hidden" class="store_big_img"></span>
 <div class="wrap">
     <div class="bread_box">
         <ol class="breadcrumb">
@@ -131,7 +150,7 @@
     <div class="prosum_box">
         <dl class="prosum_left">
             <dt>
-                <img alt="" class="big_img" src="../static/images/house_18.jpg">
+                <img alt="" class="big_img" src="">
             </dt>
             <dd id="dd">
             </dd>
@@ -148,7 +167,8 @@
                 <p class="price"><strong id="price">¥xxxx.xx</strong><span>起</span></p>
                 <p class="collect">
                     <a class="btn" id="favorite" onclick="addFavorite();"><i
-                            class="glyphicon glyphicon-heart-empty"></i><span class="onclick_collect_or_cancel">点击收藏</span></a>
+                            class="glyphicon glyphicon-heart-empty"></i><span
+                            class="onclick_collect_or_cancel">点击收藏</span></a>
 
                     <!-- <a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>-->
                     <span id="favoriteCount"></span>
@@ -202,10 +222,6 @@
             $('.big_img').attr('src', big_pic);
         }
     }
-
-
-
-
 
 
 </script>

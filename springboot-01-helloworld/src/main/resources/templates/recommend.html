@@ -1,0 +1,111 @@
+<!-- 尾部 start-->
+<style>
+    .right {
+        width: 244px;
+        height: 460px;
+        float: right;
+        background-color: #f7f7f7;
+        padding: 8px;
+        padding-top: 0;
+        font-size: 14px;
+    }
+
+    .right .top {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 2px solid #eee;
+        margin-bottom: 8px;
+    }
+
+    .right .top .hot {
+        float: left;
+        color: #ff4848;
+        margin-right: 7px;
+        line-height: 38px;
+        border-bottom: 4px solid #ff4848;
+    }
+
+    .right ul li {
+        width: 100%;
+        height: 72px;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+        font-size: 12px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .right > ul li .left {
+        float: left;
+        width: 50%;
+    }
+
+    .right ul li .left img {
+        width: 100%;
+    }
+
+    .right ul li .right {
+        width: 50%;
+        float: right;
+        padding-left: 4px;
+        box-sizing: border-box;
+        padding-top: 7px;
+    }
+
+    .right ul li .right p:nth-of-type(1) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+
+    .right ul li .right p > span {
+        font-size: 16px;
+        color: #ff4848;
+        font-weight: bold;
+        margin-left: 2px;
+    }
+
+    img {
+        display: block;
+        border: none;
+        padding: 0;
+        margin: 0;
+        outline-style: none;
+        box-sizing: border-box;
+    }
+</style>
+
+<script>
+    $(function () {
+        $.get('/limo/recommend', function (data) {
+            var html = `        <ul>\n`;
+            $.each(data, function (index, value) {
+                html += `<li>
+                            <div class="left"><img src="../static${value.img_url}" alt=""></div>
+                            <div class="right">
+                                <p>${value.name}</p>
+                                <p>网付价<span>&yen;<span>${value.price}</span>起</span>
+                                </p>
+                            </div>
+                        </li>`;
+            })
+            html += `</ul>`;
+            $(".right").append(html);
+        })
+    })
+</script>
+<div id="right">
+    <meta charset="utf-8">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <div class="right">
+        <div class="top">
+            <div class="hot">HOT</div>
+            <span>热门推荐</span>
+        </div>
+    </div>
+</div>

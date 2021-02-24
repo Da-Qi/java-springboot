@@ -121,7 +121,7 @@
                         '                                <span>' + route.price + '</span>\n' +
                         '                                <span>起</span>\n' +
                         '                            </p>\n' +
-                        '                            <p><a href="limo_details.html?id=' + route.id + '">查看详情</a></p>\n' +
+                        '                            <p><a href="limo_details.html?id=' + route.id + '&place=theme' +  '">查看详情</a></p>\n' +
                         '                        </div>\n' +
                         '                    </li>';
                     route_lis += li;
@@ -132,7 +132,10 @@
                 window.scrollTo(0, 0);
             });
         }
-
+        //引入右侧推荐页面
+        $(function () {
+            $("#right").load("recommend.html");
+        })
     </script>
 </head>
 <body>
@@ -185,78 +188,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="right">
-                <div class="top">
-                    <div class="hot">HOT</div>
-                    <span>热门推荐</span>
-                </div>
-                <ul>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend1.png" alt=""></div>
-                        <div class="right">
-                            <p>Mercedes-Benz奔驰...</p>
-                            <p>网付价<span>&yen;<span>599</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend2.png" alt=""></div>
-                        <div class="right">
-                            <p>Ford福特...</p>
-                            <p>网付价<span>&yen;<span>499</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend3.png" alt=""></div>
-                        <div class="right">
-                            <p>大通MAXUS...</p>
-                            <p>网付价<span>&yen;<span>469</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend4.png" alt=""></div>
-                        <div class="right">
-                            <p>览众房车LZONE...</p>
-                            <p>网付价<span>&yen;<span>399</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend5.png" alt=""></div>
-                        <div class="right">
-                            <p>凯伦宾威KLEN.RV...</p>
-                            <p>网付价<span>&yen;<span>359</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend6.png" alt=""></div>
-                        <div class="right">
-                            <p>江铃旅居车...</p>
-                            <p>网付价<span>&yen;<span>299</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend7.png" alt=""></div>
-                        <div class="right">
-                            <p>海格Higer...</p>
-                            <p>网付价<span>&yen;<span>289</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="../static/image_docx/recommend8.png" alt=""></div>
-                        <div class="right">
-                            <p>东风御风DFAC...</p>
-                            <p>网付价<span>&yen;<span>219</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <div id="right"></div>
         </div>
     </div>
 </div>

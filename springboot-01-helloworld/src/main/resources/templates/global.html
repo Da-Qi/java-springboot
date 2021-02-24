@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>尊享房车</title>
+    <title>全球游</title>
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/search.css">
     <script src="../static/js/jquery-3.3.1.js"></script>
@@ -13,12 +13,12 @@
     <script>
 
         $(function () {
-            load(null, 'GENERAL');
+            load(null, 'global');
         })
 
         function load(currentPage, name) {
             //发送ajax请求，请求route/pageQuery,传递cid
-            $.get("limo/pageQuery", {currentPage: currentPage, name: name}, function (pb) {
+            $.get("route/pageQuery", {currentPage: currentPage, name: name}, function (pb) {
                 //解析pagebean数据，展示到页面上
 
                 //1.分页工具条数据展示
@@ -87,14 +87,8 @@
                     lis += li;
                 }
 
-                //计算下一页的页码
-                var nextPageNum = pb.currentPage + 1;
-                if (nextPageNum >= pb.totalPage) {
-                    nextPageNum = pb.totalPage;
-                }
-                var nextPage = `<li class="threeword"><a href="javascript:;" onclick="load(` + nextPageNum + `,` + `\'` + name + `\'` + `)">下一页</a></li>`;
-                var lastPage = `<li class="threeword"><a href="javascript:;" onclick="load(` + pb.totalPage + `,` + `\'` + name + `\'` + `)">末页</a></li>`;
-
+                var nextPage = `<li class="threeword"><a href="javascript:;" onclick="load(` + currentPage + 1 + `,` +`\'`+ name+`\'` + `)">下一页</a></li>`;
+                var lastPage = `<li class="threeword"><a href="javascript:;" onclick="load(` + pb.totalPage + `,` +`\'`+ name+`\'` + `)">末页</a></li>`;
 
                 lis += nextPage;
                 lis += lastPage;
@@ -122,7 +116,7 @@
                         '                                <span>' + route.price + '</span>\n' +
                         '                                <span>起</span>\n' +
                         '                            </p>\n' +
-                        '                            <p><a href="limo_details.html?id=' + route.id + '&place=general' +  '">查看详情</a></p>\n' +
+                        '                            <p><a href="route_details.html?id=' + route.id + '&place=global' +  '">查看详情</a></p>\n' +
                         '                        </div>\n' +
                         '                    </li>';
                     route_lis += li;
@@ -133,7 +127,6 @@
                 window.scrollTo(0, 0);
             });
         }
-
         //引入右侧推荐页面
         $(function () {
             $("#right").load("recommend.html");
@@ -161,9 +154,10 @@
                     <li>
                         <div class="img"><img src="../static/image_docx/beijing5.png" alt="" style="width: 300px"></div>
                         <div class="text1">
-                            <p></p>
+                            <p>北京昌平区自由行</p>
                             <br/>
-                            <p></p>
+                            <p>中国航空博物馆 、中国北方国际射击场 、明十三陵 、居庸关长城 、昌平菩萨山、 北京银山塔林 、龙脉温泉度假村 、温度水城 、十三陵水库、 莽山森林公园、 小汤山科技农业示范园
+                                、双龙山森林公园……</p>
                         </div>
                         <div class="price">
                             <p class="price_num">
@@ -171,7 +165,7 @@
                                 <span>549</span>
                                 <span>起</span>
                             </p>
-                            <p><a href="">查看详情</a></p>
+                            <p><a href="route_detail.jsp">查看详情</a></p>
                         </div>
                     </li>
                 </ul>

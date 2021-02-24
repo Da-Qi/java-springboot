@@ -1,0 +1,185 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>收藏排行榜</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/ranking-list.css">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../static/js/getParameter.js"></script>
+</head>
+<style>
+    .page_num_inf {
+        color: #878787;
+        font-size: 19px;
+        margin-bottom: 20px;
+    }
+    .page_num_inf i {
+        float: left;
+        width: 4px;
+        background-color: #878787;
+        height: 20px;
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+    .page_num_inf span {
+        color: #ff4848;
+    }
+
+</style>
+<body>
+<script>
+    $(function () {
+        $.get("route/favoriterank",{'currentPage':getParameter("currentPage")}, function (data) {
+            //解析pagebean数据，展示到页面上
+
+            //1.分页工具条数据展示
+            //1.1 展示总页码和总记录数
+            $("#totalPage").html(data.totalPage);
+            $("#totalCount").html(data.totalCount);
+
+            var lis = "<ul>";
+
+            var firstPage = `<li><a href="favoriterank.html?currentPage=1">首页</a></li>`;
+
+            //计算上一页的页码
+            var beforeNum = data.currentPage - 1;
+            if (beforeNum <= 0) {
+                beforeNum = 1;
+            }
+
+            var beforePage = `<li class="threeword"><a href="favoriterank.html?currentPage=`+ beforeNum +`" >上一页</a></li>`;
+
+            lis += firstPage;
+            lis += beforePage;
+
+            // 定义开始位置begin,结束位置 end
+            var begin; // 开始位置
+            var end; //  结束位置
+
+
+            //1.要显示10个页码
+            if (data.totalPage < 10) {
+                //总页码不够10页
+
+                begin = 1;
+                end = data.totalPage;
+            } else {
+                //总页码超过10页
+
+                begin = data.currentPage - 5;
+                end = data.currentPage + 4;
+
+                //2.如果前边不够5个，后边补齐10个
+                if (begin < 1) {
+                    begin = 1;
+                    end = begin + 9;
+                }
+
+                //3.如果后边不足4个，前边补齐10个
+                if (end > data.totalPage) {
+                    end = data.totalPage;
+                    begin = end - 9;
+                }
+            }
+
+            for (var i = begin; i <= end; i++) {
+                var li;
+                //判断当前页码是否等于i
+                if (data.currentPage === i) {
+
+                    li = `<li class="curPage"><span>` + i + `</span></li>`;
+
+                } else {
+                    //创建页码的li
+                    li = `<li><a href="favoriterank.html?currentPage=`+ i + `">` + i + `</a></li>`;
+                }
+                //拼接字符串
+                lis += li;
+            }
+
+            //计算下一页的页码
+            var nextPageNum = data.currentPage + 1;
+            if (nextPageNum >= data.totalPage) {
+                nextPageNum = data.totalPage;
+            }
+            var nextPage = `<li class="threeword"><a href="favoriterank.html?currentPage=`+ nextPageNum +`">下一页</a></li>`;
+            var lastPage = `<li class="threeword"><a href="favoriterank.html?currentPage=`+ data.totalPage +`">末页</a></li>`;
+
+
+            lis += nextPage;
+            lis += lastPage;
+            lis += `</ul>`;
+
+            //将lis内容设置到 ul
+            $(".pageNum").html(lis);
+
+
+            var html = `<ul>`;
+            $.each(data.list, function (index, value) {
+                html += `            <li>`;
+                if (index === 0) {
+                    html += `<span class="num one">1</span>`;
+                } else if (index === 1) {
+                    html += `<span class="num two">2</span>`;
+                } else {
+                    html += `<span class="num">${index + 1}</span>`;
+                }
+                html += `<a href="route_details.html?id=${value.id}&place=favoriterank"><img src="../static${value.image}" alt=""></a>
+                <h4><a href="route_details.html?id=${value.id}&place=favoriterank">${value.name}</a></h4>
+                <p>
+                    <b class="price">&yen;<span>${value.price}</span>起</b>
+                    <span class="shouchang"><span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span>${value.like_number}</span>
+                </p>
+            </li>`;
+            })
+            html += `</ul>`;
+            $(".list").html(html);
+        })
+    })
+</script>
+<!--引入头部-->
+<div id="header"></div>
+<div class="contant">
+    <div class="shaixuan">
+        <span>线路名称</span>
+        <input type="text">
+        <span>金额</span>
+        <input type="text">~<input type="text">
+        <button>搜索</button>
+    </div>
+    <div class="list clearfix">
+        <ul>
+            <li>
+                <span class="num one">1</span>
+                <a href="route_detail.jsp"><img src="image_docx/Collectionlist1.png" alt=""></a>
+                <h4><a href="route_detail.jsp">北京八达岭长城旅游区</a></h4>
+                <p>
+                    <b class="price">&yen;<span>599</span>起</b>
+                    <span class="shouchang">已收藏450次</span>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="page_num_inf">
+        <i></i> 共
+        <span id="totalPage">12</span>页<span id="totalCount">132</span>条
+    </div>
+    <div class="pageNum">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li class="threeword"><a href="#">上一页</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li class="threeword"><a href="javascript:;">下一页</a></li>
+            <li class="threeword"><a href="javascript:;">末页</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--导入底部-->
+<div id="footer"></div>
+<!--导入布局js，共享header和footer-->
+<script type="text/javascript" src="js/include.js"></script>
+</body>
+</html>

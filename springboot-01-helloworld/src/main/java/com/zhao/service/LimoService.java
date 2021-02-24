@@ -22,4 +22,6 @@ public interface LimoService {
     void addFavorite(int id, int user_id);
 
     void removeFavorite(int id, int user_id);
+
+    List<Limo> getLimoRecommend();
 }
