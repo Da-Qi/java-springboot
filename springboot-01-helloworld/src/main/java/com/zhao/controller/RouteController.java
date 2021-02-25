@@ -167,4 +167,20 @@ public class RouteController {
         User user = (User) request.getSession().getAttribute("user");
         routeService.removeFavorite(id, user.user_id);
     }
+
+    @RequestMapping(value = "/route/index", produces = "application/json;charset=utf-8")
+    public String routeIndex() {
+        List<Route> routes = routeService.selectIndexRoutes();
+        JSONArray jsonArray = new JSONArray();
+        routes.forEach(route -> {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name",route.name);
+            jsonObject.put("price",route.price);
+            jsonObject.put("img_url",route.img_url);
+            jsonObject.put("id",route.id);
+            jsonObject.put("like_number",route.like_number);
+            jsonArray.add(jsonObject);
+        });
+        return jsonArray.toString();
+    }
 }

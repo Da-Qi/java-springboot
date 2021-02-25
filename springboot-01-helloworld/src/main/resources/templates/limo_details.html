@@ -27,6 +27,13 @@
             type: "get",
             success: function (data) {
                 $("#bread_box_first").html(data.breadcrumb);
+                if (place === 'index'){
+                    $("#bread_box_first").attr("href","index.html");
+                }else if (place === 'theme'){
+                    $("#bread_box_first").attr("href","theme.html");
+                }else if (place === 'general'){
+                    $("#bread_box_first").attr("href","general.html");
+                }
                 $("#bread_box_second").html(data.name);
                 $(".big_img").attr("src", "../static" + data.img_url);
                 //存储大图的信息

@@ -177,6 +177,7 @@ public class LimoController {
             jsonObject.put("name", limo.name);
             jsonObject.put("price", limo.rent);
             jsonObject.put("img_url", limo.img_url);
+            jsonObject.put("id", limo.id);
             jsonArray.add(jsonObject);
         });
         return jsonArray.toString();

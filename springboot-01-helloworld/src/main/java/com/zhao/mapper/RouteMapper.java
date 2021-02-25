@@ -20,4 +20,6 @@ public interface RouteMapper {
     void addRouteLikeNumber(int id);
 
     void reduceRouteLikeNumber(int id);
+
+    List<Route> selectIndexRoutes();
 }

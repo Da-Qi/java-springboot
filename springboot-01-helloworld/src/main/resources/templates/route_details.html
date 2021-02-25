@@ -18,12 +18,33 @@
 <script>
     $(function () {
         var place = getParameter("place");
+        if (place === null){
+            place = 'beijing';
+        }
         var id = getParameter("id");
         $.ajax({
             url: "route/" + place + "/" + id,
             type: "get",
             success: function (data) {
                 $("#bread_box_first").html(data.breadcrumb);
+                if (place === 'yunnan'){
+                    $("#bread_box_first").attr("href","yunnan.html");
+                }else if (place === 'team'){
+                    $("#bread_box_first").attr("href","team.html");
+                }else if (place === 'northAmerican'){
+                    $("#bread_box_first").attr("href","northAmerican.html");
+                }else if (place === 'macao'){
+                    $("#bread_box_first").attr("href","macao.html");
+                }else if (place === 'global'){
+                    $("#bread_box_first").attr("href","global.html");
+                }else if (place === 'hongkong'){
+                    $("#bread_box_first").attr("href","hongkong.html");
+                }else if (place === 'favoriterank'){
+                    $("#bread_box_first").attr("href","favoriterank.html");
+                }else if (place === 'beijing'){
+                    $("#bread_box_first").attr("href","beijing.html");
+                }
+
                 $("#bread_box_second").html(data.name);
                 $(".big_img").attr("src", "../static" + data.img_url);
                 //存储大图的信息

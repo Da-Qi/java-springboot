@@ -5,6 +5,8 @@ import com.zhao.pojo.PageRequest;
 import com.zhao.pojo.PageResult;
 import com.zhao.pojo.Route;
 
+import java.util.List;
+
 public interface RouteService {
     PageResult selectRouteByPlace(String place, PageRequest pageRequest);
 
@@ -17,4 +19,6 @@ public interface RouteService {
     void addRouteFavorite(int id, int user_id);
 
     void removeFavorite(int id, int user_id);
+
+    List<Route> selectIndexRoutes();
 }

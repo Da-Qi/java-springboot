@@ -104,4 +104,9 @@ public class RouteServiceImpl implements RouteService {
         routeMapper.reduceRouteLikeNumber(id);
     }
 
+    @Override
+    public List<Route> selectIndexRoutes() {
+        return routeMapper.selectIndexRoutes();
+    }
+
 }

@@ -22,4 +22,8 @@
     <update id="reduceRouteLikeNumber">
         update route set like_number = like_number - 1 where id = #{id};
     </update>
+
+    <select id="selectIndexRoutes" resultType="route">
+        select * from route order by like_number desc limit 6;
+    </select>
 </mapper>

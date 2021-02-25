@@ -69,7 +69,7 @@
                 <span>房车精选</span>
             </div>
             <!-- Nav tabs -->
-            <ul class="jx_tabs " role="tablist">
+            <ul class="jx_tabs" role="tablist">
                 <li role="presentation" class="active">
                     <span><a href="#popularity" aria-controls="popularity" role="tab" data-toggle="tab">人气排行</a></span>
                 </li>
@@ -83,7 +83,7 @@
         </div>
         <script>
             function getLimoDetails(id) {
-                location.href="limo_details.html?id=" + id;
+                location.href = "limo_details.html?id=" + id;
             }
 
             /*解析返回的json数据*/
@@ -133,6 +133,28 @@
                         $("#theme").append(decodeAjax(data));
                     }
                 });
+
+                $.ajax({
+                    url: '/route/index',
+                    type: 'get',
+                    success: function (data) {
+                        var html = ``;
+                        $.each(data, function (index, value) {
+                            html += `<div class="col-md-4">
+                                        <a href="route_details.html?id=` + value.id + `">
+                                        <img src="../static${value.img_url}" alt="">
+                                        <div class="has_border">
+                                        <h3>${value.name}</h3>
+                                        <div class="price">网付价<em>￥</em><strong>${value.price}</strong><em>起</em>
+                                        <span style="padding-left: 30%"><span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span> ${value.like_number}</span>
+                                        </div>
+                                        </div>
+                                        </a>
+                                    </div>`;
+                        })
+                        $(".guone_r .row").html(html);
+                    }
+                })
             })
         </script>
         <div class="jx_content">
@@ -161,150 +183,11 @@
             <div class="guone_r">
                 <div class="row">
 
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/domestic6.png" alt="">
-                            <div class="has_border">
-                                <h3>新疆草原3天2晚自由行</h3>
-                                <div class="price">网付价<em>￥</em><strong>880</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/domestic2.png" alt="">
-                            <div class="has_border">
-                                <h3>环海南岛5天4晚自由行</h3>
-                                <div class="price">网付价<em>￥</em><strong>580</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/domestic3.png" alt="">
-                            <div class="has_border">
-                                <h3>阿尔山4天3晚自由行</h3>
-                                <div class="price">网付价<em>￥</em><strong>980</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/domestic4.png" alt="">
-                            <div class="has_border">
-                                <h3>长白山4天3晚自由行</h3>
-                                <div class="price">网付价<em>￥</em><strong>720</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/domestic5.png" alt="">
-                            <div class="has_border">
-                                <h3>青海3天2晚自由行</h3>
-                                <div class="price">网付价<em>￥</em><strong>410</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/domestic1.png" alt="">
-                            <div class="has_border">
-                                <h3>草原天路3天2晚自由行</h3>
-                                <div class="price">网付价<em>￥</em><strong>688</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- 国内游 end-->
-    <br>
-    <br>
-    <!-- 房车营地游 start-->
-    <section class="hemai_jx">
-        <div class="jx_top">
-            <div class="jx_tit">
-                <img src="../static/images/icon_7.jpg" alt="">
-                <span>房车营地</span>
-            </div>
-        </div>
-        <div class="heima_gn">
-            <div class="guonei_l">
-                <img src="../static/images/house_32.jpg" alt="" width="380px">
-            </div>
-            <div class="guone_r">
-                <div class="row">
-                    <!--<div class="col-md-4">
-                        <a href="#">
-                            <img src="image_docx/camp1.png" alt="">
-                            <div class="has_border">
-                                <h3>白鹿之隐温泉房车度假营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>229</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>-->
 
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/camp2.png" alt="">
-                            <div class="has_border">
-                                <h3>世博房车时光·行云轩轩·房车营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>220</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/camp3.png" alt="">
-                            <div class="has_border">
-                                <h3>海宁芳草青青房车营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>230</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/camp4.png" alt="">
-                            <div class="has_border">
-                                <h3>蜜橙丽江雪山玫瑰庄园房车营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>276</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/camp5.png" alt="">
-                            <div class="has_border">
-                                <h3>上海迪加房车营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>276</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/camp6.png" alt="">
-                            <div class="has_border">
-                                <h3>66号房车营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>299</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#">
-                            <img src="../static/image_docx/camp1.png" alt="">
-                            <div class="has_border">
-                                <h3>白鹿之隐温泉房车度假营地</h3>
-                                <div class="price">网付价<em>￥</em><strong>229</strong><em>起</em></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- 境外游 end-->
 </section>
 <!-- 旅游 end-->
 <!--导入底部-->

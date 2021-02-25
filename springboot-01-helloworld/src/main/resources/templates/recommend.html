@@ -86,12 +86,14 @@
             var html = `        <ul>\n`;
             $.each(data, function (index, value) {
                 html += `<li>
-                            <div class="left"><img src="../static${value.img_url}" alt=""></div>
+                            <a href="limo_details.html?id=${value.id}">
+                            <div class="left"><img src="../static${value.img_url}"></div>
                             <div class="right">
                                 <p>${value.name}</p>
                                 <p>网付价<span>&yen;<span>${value.price}</span>起</span>
                                 </p>
                             </div>
+                            </a>
                         </li>`;
             })
             html += `</ul>`;
