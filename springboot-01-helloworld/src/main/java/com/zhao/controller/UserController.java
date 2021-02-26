@@ -99,10 +99,14 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/loginByCookie", produces = "application/json;charset=utf-8")
-    public void userLoginByCookie(HttpServletRequest request) {
+    public String userLoginByCookie(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = userService.findUserByNickName(request.getParameter("nickname"));
         session.setAttribute("user",user);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("img_url",user.user_img_url);
+        //后面还有用户的各种信息待传
+        return jsonObject.toString();
     }
 
 
