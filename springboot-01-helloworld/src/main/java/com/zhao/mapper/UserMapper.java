@@ -16,7 +16,7 @@ public interface UserMapper {
 
     void updateUser(User user);
 
-    User findUserById(String id);
+    User findUserById(int id);
 
     int findUserByName(String username);
 
@@ -25,4 +25,6 @@ public interface UserMapper {
     User findUserByNickName(String nickname);
 
     void changeUserImageUrl(String imageUrl, long user_id);
+
+    int selectAllUser();
 }

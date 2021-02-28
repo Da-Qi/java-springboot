@@ -12,6 +12,12 @@ html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, l
     box-sizing: border-box;
     font-family: '微软雅黑';
 }
+/*去掉下划线*/
+a{
+
+    text-decoration:none;
+
+}
 
 fieldset, img, input, button {
     border: none;
@@ -72,7 +78,6 @@ h1, h2, h3, h4, h5, h6 {
 
 #header {
     width: 100%;
-    overflow: hidden;
 }
 
 .top_banner {

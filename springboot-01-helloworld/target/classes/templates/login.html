@@ -51,7 +51,7 @@
                     success:function (data) {
                         //处理服务器响应的数据  data  {flag:true,errorMsg:"注册失败"}
                         if (data.flag) {
-                            alert("登录成功啦！！ " + data.msg);
+                            alert("登录成功啦！！ " + data.msg + data.nickname);
                             setCookie('nickname',data.nickname,1);
                             location.href = 'index.html';
                         } else {
@@ -71,7 +71,7 @@
 
 <body>
 <!--引入头部-->
-<div id="header"></div>
+<div id="header" style="position: sticky;top: -1px;z-index: 5;"></div>
 <!-- 头部 end -->
 <section id="login_wrap">
     <div class="fullscreen-bg" style="background: url(../static/images/house_6.jpg);height: 532px;">

@@ -20,6 +20,14 @@
     <select id="findUserByNickName" resultType="user">
         select * from user where user_nickname = #{nickname};
     </select>
+
+    <select id="findUserById" resultType="user">
+        select * from user where user_id = #{user_id}
+    </select>
+
+    <select id="selectAllUser" resultType="int">
+        select count(user_id) from user
+    </select>
     
     <update id="changeUserImageUrl">
         update user set user_img_url = #{imageUrl} where user_id = #{user_id};

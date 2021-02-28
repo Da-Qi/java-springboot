@@ -9,26 +9,49 @@
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" type="text/css" href="../static/css/index.css">
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../static/js/jquery-3.3.1.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../static/js/bootstrap.min.js"></script>
     <!--导入布局js，共享header和footer-->
     <script type="text/javascript" src="../static/js/include.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wallleap/cdn/js/xuehua.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wallleap/cdn/js/sakura.js"></script>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <![endif]-->
+<!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wallleap/cdn/js/xuehua.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wallleap/cdn/js/sakura.js"></script>-->
+    <script src="../static/js/header.js"></script>
 </head>
+<style>
+    .top_banner{
+        background: url("../static/images/head_back.png") repeat-x 5px;
+        width: 100%;
+    }
+    .nav-li{
+        margin-top: -20px;
+    }
+    body{
+        overflow: auto;
+    }
+</style>
 <body>
 <!--引入头部-->
-
 <div id="header" style="position: sticky;top: -1px;z-index: 5;"></div>
-<!-- banner start-->
-<section id="banner" style="position: absolute;top: 80px;height: 850px">
+<div class="top_banner" style="text-align: center;position: absolute;top: 50px;"></div>
+<!-- 首页导航 -->
+<div class="navitem" style="text-align: center;position: absolute;top: 170px;">
+    <ul id="category" class="nav" style="text-align: center">
+        <li class="nav-active nav-li"><a href="index.html">首页</a></li>
+        <li class="nav-li"><a href="theme.html">主题房车</a></li>
+        <li class="nav-li"><a href="general.html">尊享房车</a></li>
+        <li class="nav-li"><a href="beijing.html">北京</a></li>
+        <li class="nav-li"><a href="hongkong.html">香港</a></li>
+        <li class="nav-li"><a href="northAmerican.html">北美</a></li>
+        <li class="nav-li"><a href="yunnan.html">云南</a></li>
+        <li class="nav-li"><a href="macao.html">澳门</a></li>
+        <li class="nav-li"><a href="team.html">组队游</a></li>
+        <li class="nav-li"><a href="global.html">全球自由行</a></li>
+        <li class="nav-li"><a href="favoriterank.html">收藏排行榜</a></li>
+    </ul>
+</div>
+<section id="banner" style="position: absolute;top: 220px;text-align: center;width: 100%;">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="2000">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -38,13 +61,13 @@
         </ol>
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="../static/images/banner_1.JPG" alt="">
+            <div class="item active banner">
+                <img src="../static/images/banner_1.JPG" alt="" >
             </div>
-            <div class="item">
+            <div class="item banner">
                 <img src="../static/images/banner_2.JPG" alt="">
             </div>
-            <div class="item">
+            <div class="item banner">
                 <img src="../static/images/banner_3.JPG" alt="">
             </div>
         </div>
@@ -61,7 +84,7 @@
 </section>
 <!-- banner end-->
 <!-- 旅游 start-->
-<section id="content" style="margin-top: 850px">
+<section id="content" style="top: 1100px;position: absolute;padding-left: 20%;">
     <section class="hemai_jx">
         <div class="jx_top">
             <div class="jx_tit">
@@ -191,7 +214,7 @@
 </section>
 <!-- 旅游 end-->
 <!--导入底部-->
-<div id="footer"></div>
+<div id="footer" style="position: absolute;top: 2300px;align-content: center"></div>
 
 </body>
 </html>

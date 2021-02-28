@@ -37,6 +37,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/yunnan.html").setViewName("yunnan");
         registry.addViewController("/recommend.html").setViewName("recommend");
         registry.addViewController("/favoriterank.html").setViewName("favoriterank");
+        registry.addViewController("/forumIndex").setViewName("forumIndex");
 
     }
 

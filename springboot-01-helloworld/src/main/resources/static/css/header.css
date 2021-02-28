@@ -1,8 +1,7 @@
 .navbar {
-    background: #fff;
-    box-shadow: 0 0 1em #eee;
     height: 56px;
     top: 1px;
+    background-color: white;
 }
 
 
@@ -27,30 +26,34 @@
 }
 
 .tipmessage-box {
+    right: 450px;
     padding-top: 7px;
     position: absolute;
     font-size: 14px;
 }
 
 .navigationBar_right {
-    margin-top: -40px;
-    width: 60px;
     float: right;
+    margin-top: -40px;
+    width: 240px;
+    margin-right: -50px;
+    border-radius: 18px;
+
+    z-index: 5;
 }
 
 .ksd-avatar2 {
+    right: 69px;
     width: 24px;
     height: 24px;
     border-radius: 50%;
     vertical-align: baseline;
-    top: -5px;
-    position: relative;
+    top: 3px;
+    position: absolute;
 }
 
 .ksd-user-info {
-    padding: 10px;
     position: relative;
-    top: 5px;
 }
 
 .ksd-logindrop.show {
@@ -60,39 +63,34 @@
 .ksd-home {
     float: left;
     padding: 10px 0px 0px 8px;
-    font-size: 11px;
-    color: rgb(142, 142, 142);
+    font-size: 14px;
     transform: scale(0.9);
     display: none;
 }
 
 .ksd-logindrop {
-    position: relative;
-    width: 150px;
-    background: #fff;
-    box-shadow: 0 0 1em #ddd;
-    margin: 10px;
+    width: 240px;
+    float: right;
     font-size: 14px;
-    color: #ffffff;
     top: -12px;
-    right: 210px;
     text-align: right;
     border-radius: 18px;
+
+
 }
 
 .ksd-text {
+    width: 59px;
+    right: 8px;
+    top: 7px;
     position: absolute;
-    margin-bottom: 15px;
-    width: 60px;
-    top: 24px;
-    right: 60px;
 }
 
 .dropdown-toggle::after {
     display: inline-block;
     position: absolute;
-    top: 33px;
-    right: 49px;
+    right: 0px;
+    top: 16px;
     margin-left: .255em;
     vertical-align: .255em;
     content: "";
@@ -108,6 +106,45 @@
     font-size: 14px;
 }
 
-.ksd-login-items{
-    z-index: 10;
+.ksd-login-items {
+    height: auto;
+    width: 240px;
+}
+
+.ksd-num-items {
+    float: left;
+    width: 33.33333%;
+    text-align: center;
+    transition: 60ms linear;
+    padding: 5px 0px;
+    font-weight: 400;
+    display: block;
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 2px;
+}
+
+.ksd-header-items {
+    float: left;
+    text-align: center;
+    transition: 60ms linear;
+    padding: 15px 0;
+    font-weight: 400;
+    display: block;
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 2px;
+}
+
+.num {
+    display: block;
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 2px;
+    font-weight: 700;
+}
+
+.ktext {
+    display: inline;
+    color: #444;
 }

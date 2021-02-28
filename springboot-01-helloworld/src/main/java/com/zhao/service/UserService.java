@@ -14,4 +14,8 @@ public interface UserService {
     boolean ifUserExist(String username);
 
     boolean updateUser(User user);
+
+    User findUserById(int user_id);
+
+    int selectAllUser();
 }

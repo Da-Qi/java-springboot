@@ -1,223 +1,19 @@
-<!DOCTYPE html>
 <!-- 头部 start -->
-<html>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <script src="../static/js/getParameter.js"></script>
 <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<link rel="stylesheet" href="../static/layui/css/layui.css">
+<link rel="stylesheet" href="../static/css/header.css">
 <script src="../static/js/jquery-3.3.1.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../static/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i].trim();
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
-    $(function () {
-        var nickname = getCookie('nickname');
-        if (nickname !== '') {
-            //查询用户信息
-            $(".span_username").html(nickname);
-            $(".user_offline").hide();
-            $(".user_online").show();
-            console.log("我不是下线了吗？");
-            $.get("user/loginByCookie", {'nickname': nickname}, function (data) {
-                $(".user_img_url").attr("src", "../static" + data.img_url);
-            });
-        } else {
-            $(".user_offline").show();
-            $(".user_online").hide();
-            $(".tipmessage-box").hide();
-            $(".ksd-logindrop").hide();
-        }
-    });
-
-    $("#exit").click(function () {
-        $.get("exit");
-        document.cookie = 'nickname=';
-        location.href = "http://localhost:8081/login.html";
-    })
-
-
-    $(function () {
-        var pathname = window.location.pathname;
-        if (pathname === '/personal.html') {
-            $("#show_personal").hide();
-            $("#show_index").show();
-        } else {
-            $("#show_personal").show();
-            $("#show_index").hide();
-        }
-    })
-</script>
-
+<script src="../static/js/header.js"></script>
 <style>
-
-    .navbar {
-        background: #fff;
-        box-shadow: 0 0 1em #eee;
-        height: 56px;
-        top: 1px;
-    }
-
-
-    .navbar-brand {
-        display: inline-block;
-        height: 55px;
-        width: 260px;
-        padding-top: 1px;
-    }
-
-    .navigationBar {
-        width: 250px;
-        margin-left: 200px;
+    .bnone {
         margin-top: 5px;
     }
 
-    .nav-pills {
-        width: 500px;
-        margin-top: 5px;
-        padding-left: 5px;
-        height: 45px;
-    }
 
-    .tipmessage-box {
-        right: 450px;
-        padding-top: 7px;
-        position: absolute;
-        font-size: 14px;
-    }
-
-    .navigationBar_right {
-        float: right;
-        margin-top: -40px;
-        width: 240px;
-        margin-right: -50px;
-        border-radius: 18px;
-        box-shadow: #eee 1px 1px 1px 1px;
-        z-index: 5;
-    }
-
-    .ksd-avatar2 {
-        right: 69px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        vertical-align: baseline;
-        top: 3px;
-        position: absolute;
-    }
-
-    .ksd-user-info {
-        position: relative;
-    }
-
-    .ksd-logindrop.show {
-        box-shadow: none;
-    }
-
-    .ksd-home {
-        float: left;
-        padding: 10px 0px 0px 8px;
-        font-size: 14px;
-        color: rgb(142, 142, 142);
-        transform: scale(0.9);
-        display: none;
-    }
-
-    .ksd-logindrop {
-        width: 240px;
-        float: right;
-        background: #fff;
-        font-size: 14px;
-        color: #ffffff;
-        top: -12px;
-        text-align: right;
-        border-radius: 18px;
-
-
-    }
-
-    .ksd-text {
-        width: 59px;
-        right: 8px;
-        top: 7px;
-        position: absolute;
-    }
-
-    .dropdown-toggle::after {
-        display: inline-block;
-        position: absolute;
-        right: 0px;
-        top: 16px;
-        margin-left: .255em;
-        vertical-align: .255em;
-        content: "";
-        border-top: .3em solid;
-        border-right: .3em solid transparent;
-        border-bottom: 0;
-        border-left: .3em solid transparent;
-    }
-
-    .user_offline {
-        top: 9px;
-        position: absolute;
-        font-size: 14px;
-    }
-
-    .ksd-login-items {
-        height: auto;
-        width: 240px;
-    }
-
-    .ksd-num-items {
-        float: left;
-        width: 33.33333%;
-        text-align: center;
-        transition: 60ms linear;
-        padding: 5px 0px;
-        font-weight: 400;
-        display: block;
-        font-size: 18px;
-        color: #444;
-        margin-bottom: 2px;
-    }
-
-    .ksd-header-items {
-        float: left;
-        text-align: center;
-        transition: 60ms linear;
-        padding: 15px 0;
-        font-weight: 400;
-        display: block;
-        font-size: 18px;
-        color: #444;
-        margin-bottom: 2px;
-    }
-
-    .num {
-        display: block;
-        font-size: 18px;
-        color: #444;
-        margin-bottom: 2px;
-        font-weight: 700;
-    }
-
-    .ktext {
-        display: inline;
-        color: #444;
-    }
 </style>
-
 <header>
     <nav class="navbar">
         <div class="container">
@@ -228,8 +24,8 @@
             <!--导航栏-->
             <div class="navigationBar">
                 <ul class="nav nav-pills">
-                    <li role="presentation" class="active"><a href="index.html">首页</a></li>
-                    <li role="presentation" style="margin-left: 20px"><a href="#">论坛</a></li>
+                    <li role="presentation" class="active index"><a href="index.html">首页</a></li>
+                    <li role="presentation" style="margin-left: 20px" class="forum"><a href="/forumIndex">论坛</a></li>
                 </ul>
             </div>
 
@@ -239,12 +35,14 @@
                     $(".i-frame").hide();
                     $(".tipmessage-box").toggle();
                     $(".ksd-login-items").toggle();
+                    $(".ksd-logindrop").addClass(".ksd-logindrop-show");
                 })
 
                 $(".ksd-logindrop").on("mouseleave", function () {
                     $(".ksd-home").hide();
                     $(".tipmessage-box").show();
                     $(".ksd-login-items").hide();
+                    $(".ksd-logindrop").removeClass(".ksd-logindrop-show");
                 })
             </script>
             <!--右侧个人信息栏-->
@@ -256,7 +54,7 @@
                     </div>
 
                     <div class="ksd-logindrop show" data-vip="0">
-                        <div style="height: 30px;">
+                        <div style="; position: absolute;top: 12px;right: 320px;width: 240px;border-radius: 18px;background: #fff;">
                             <a href="personal.html" class="ksd-home pr tp2" style="display: none;"><i
                                     class="glyphicon glyphicon-home"></i>进入主页</a>
 
@@ -269,9 +67,11 @@
                             </a>
                         </div>
 
-                        <div class="ksd-login-items" hidden="hidden">
+                        <div class="ksd-login-items" hidden="hidden"
+                             style="position: absolute;top: 40px;right: 320px;height:80px;background: #fff;
+        ">
                             <div class="ksd-header-items" style="height: 100px">
-                                <div style="width: 240px;height: 80px;border-bottom: 1px solid #eee;">
+                                <div style="width: 240px;height: 65px;border-bottom: 1px solid #eee;">
                                     <ul>
                                         <li class="ksd-num-items">
                                             <a href="/u#topic">
@@ -297,7 +97,8 @@
                             </div>
                         </div>
                         <div class="ksd-login-items" hidden="hidden"
-                             style="border-bottom: 1px solid #eee;padding-left: 10px;padding-bottom: -5px">
+                             style="right:320px;top: 120px;position: absolute;padding-bottom: 5px;padding-left: 10px;background: #fff;
+        box-shadow: 0 0 1em #eee;">
                             <ul class="user_items">
                                 <li class="items">
                                     <a href="personal.html" style="width:126px;text-align:left;margin-bottom: -5px;"
@@ -308,7 +109,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="ksd-login-items bnone" hidden="hidden">
+                        <div class="ksd-login-items bnone" hidden="hidden"
+                             style="right:320px;top: 138px;position: absolute;padding-top: 5px;background: #fff;
+        box-shadow: 0 0 1em #eee;">
                             <ul>
                                 <li class="items" style="padding-left: 10px">
                                     <a href="javascript:void(0);" class="fl flitems ksd-logout" id="exit"><i
@@ -332,25 +135,10 @@
             </div>
 
         </div>
-    </div>
+
     </nav>
+
 </header>
-<!-- 头部 end -->
-<!-- 首页导航 -->
-<div class="navitem" style="text-align: center;position: relative;top: -20px;z-index: -1;">
-    <ul id="category" class="nav" style="text-align: center">
-        <li class="nav-active"><a href="index.html">首页</a></li>
-        <li><a href="theme.html">主题房车</a></li>
-        <li><a href="general.html">尊享房车</a></li>
-        <li><a href="beijing.html">北京</a></li>
-        <li><a href="hongkong.html">香港</a></li>
-        <li><a href="northAmerican.html">北美</a></li>
-        <li><a href="yunnan.html">云南</a></li>
-        <li><a href="macao.html">澳门</a></li>
-        <li><a href="team.html">组队游</a></li>
-        <li><a href="global.html">全球自由行</a></li>
-        <li><a href="favoriterank.html">收藏排行榜</a></li>
-    </ul>
-</div>
+
 
 </html>
