@@ -20,9 +20,11 @@
         .breadcrumb li a {
             text-decoration: none;
         }
-        .sidebar.ads a{
+
+        .sidebar.ads a {
             text-decoration: none;
         }
+
         html {
             height: 100%;
         }
@@ -245,33 +247,32 @@
                     var route = pb.list[i];
 
                     var li = `<div class="title-article ksd-title-article-link list-card" data-href="forumDetails?id=${route.id}">
+                                <span class="iconfont iconzhiding ksd-iconzhiding"></span>
+                                <!--指向文章详情页-->
+                                <a target="_blank" href="forumDetails?id=${route.id}" class="hlink">
+                                    <h1>${route.title}</h1>
+                                </a>
+                                <a target="_blank" href="forumDetails?id=${route.id}" class="hlink2">
+                                    <p>${route.description}</p>
+                                </a>
+                                <div class="title-msg">
+                                    <span>
+                                        <!--指向个人主页-->
+                                        <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="">
+                                        <img src="../static${route.user_img_url}" class="ksd-avatar" alt="" style="">
+                                        <span class="mx-1">${route.user_nickname}</span></a>
 
-                    <span class="iconfont iconzhiding ksd-iconzhiding"></span>
-                    <!--指向文章详情页-->
-                    <a target="_blank" href="#" class="hlink">
-                        <h1>${route.title}</h1>
-                    </a>
-                    <a target="_blank" href="#" class="hlink2">
-                        <p>${route.description}</p>
-                    </a>
-                    <div class="title-msg">
-                        <span>
-                            <!--指向个人主页-->
-                            <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="">
-                            <img src="../static${route.user_img_url}" class="ksd-avatar" alt="" style="">
-                            <span class="mx-1">${route.user_nickname}</span></a>
-
-                            <!--<span class="svipicon"><i class="iconfont iconsvip"></i></span>-->
-                        </span>
-                        <span class="pr-2 pl-2 ksd-screen-time-no"><label
-                                class="fw">时间：</label><span>${route.post_time}</span></span>
-                        <span class="pr-2 none"><label class="fw">评论数：</label><span>1010</span></span>
-                        <span class=" pr-2"><label class="fw">浏览：</label><span>${route.watch_count}</span></span>
-                        <span><label class="fw">分类：</label>
-                            <a href="#" class="ksd-topic-tags">${route.category}</a>
-                        </span>
-                    </div>
-                </div>`;
+                                        <!--<span class="svipicon"><i class="iconfont iconsvip"></i></span>-->
+                                    </span>
+                                    <span class="pr-2 pl-2 ksd-screen-time-no"><label
+                                            class="fw">时间：</label><span>${route.post_time}</span></span>
+                                    <span class="pr-2 none"><label class="fw">评论数：</label><span>1010</span></span>
+                                    <span class=" pr-2"><label class="fw">浏览：</label><span>${route.watch_count}</span></span>
+                                    <span><label class="fw">分类：</label>
+                                        <a href="forumIndex?searchKey=${route.category}" class="ksd-topic-tags">${route.category}</a>
+                                    </span>
+                                </div>
+                            </div>`
                     route_lis += li;
                 }
                 $(".load-topics-page").html(route_lis);
@@ -334,64 +335,6 @@
             </nav>
 
             <div class="load-topics-page" data-total="4561">
-                <div class="title-article ksd-title-article-link list-card" data-href="bbs/1362335752301637633">
-
-                    <span class="iconfont iconzhiding ksd-iconzhiding"></span>
-                    <a target="_blank" href="bbs/1362335752301637633" class="hlink">
-                        <h1>🚀 活动：寻找爱写博客的你</h1>
-                    </a>
-                    <a target="_blank" href="bbs/1362335752301637633" class="hlink2">
-                        <p>组织一群热爱写博客分享的小伙伴的圈子，共同进步！</p>
-                    </a>
-                    <div class="title-msg">
-                        <span>
-                            <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="学相伴">
-                            <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/p2kibtCm4Z9p8aDSL0oQRl67AZ7dPebnLV9ibZtsQP8CGQeLeKfuiaeLmdl4KDzNTYM5M3UJ46ZBmOJDPDwsAsn0w/132"
-                                 data-original="https://thirdwx.qlogo.cn/mmopen/vi_32/p2kibtCm4Z9p8aDSL0oQRl67AZ7dPebnLV9ibZtsQP8CGQeLeKfuiaeLmdl4KDzNTYM5M3UJ46ZBmOJDPDwsAsn0w/132"
-                                 class="ksd-avatar" alt="" style="">
-                            <span class="mx-1">学相伴</span></a>
-
-
-                            <span class="svipicon"><i class="iconfont iconsvip"></i></span>
-                        </span>
-                        <span class="pr-2 pl-2 ksd-screen-time-no"><label
-                                class="fw">时间：</label><span>2021/02/18 17:38</span></span>
-                        <span class="pr-2 none"><label class="fw">评论数：</label><span>69</span></span>
-                        <span class=" pr-2"><label class="fw">浏览：</label><span>1767</span></span>
-                        <span><label class="fw">分类：</label>
-                            <a href="/bbs?uid=&amp;from=&amp;cid=1" class="ksd-topic-tags">程序人生</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="title-article ksd-title-article-link list-card" data-href="bbs/1362335752301637633">
-
-                    <span class="iconfont iconzhiding ksd-iconzhiding"></span>
-                    <a target="_blank" href="bbs/1362335752301637633" class="hlink">
-                        <h1>🚀 活动：寻找爱写博客的你</h1>
-                    </a>
-                    <a target="_blank" href="bbs/1362335752301637633" class="hlink2">
-                        <p>组织一群热爱写博客分享的小伙伴的圈子，共同进步！</p>
-                    </a>
-                    <div class="title-msg">
-                        <span>
-                            <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="学相伴">
-                            <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/p2kibtCm4Z9p8aDSL0oQRl67AZ7dPebnLV9ibZtsQP8CGQeLeKfuiaeLmdl4KDzNTYM5M3UJ46ZBmOJDPDwsAsn0w/132"
-                                 data-original="https://thirdwx.qlogo.cn/mmopen/vi_32/p2kibtCm4Z9p8aDSL0oQRl67AZ7dPebnLV9ibZtsQP8CGQeLeKfuiaeLmdl4KDzNTYM5M3UJ46ZBmOJDPDwsAsn0w/132"
-                                 class="ksd-avatar" alt="" style="">
-                            <span class="mx-1">学相伴</span></a>
-
-
-                            <span class="svipicon"><i class="iconfont iconsvip"></i></span>
-                        </span>
-                        <span class="pr-2 pl-2 ksd-screen-time-no"><label
-                                class="fw">时间：</label><span>2021/02/18 17:38</span></span>
-                        <span class="pr-2 none"><label class="fw">评论数：</label><span>69</span></span>
-                        <span class=" pr-2"><label class="fw">浏览：</label><span>1767</span></span>
-                        <span><label class="fw">分类：</label>
-                            <a href="/bbs?uid=&amp;from=&amp;cid=1" class="ksd-topic-tags">程序人生</a>
-                        </span>
-                    </div>
-                </div>
                 <div class="title-article ksd-title-article-link list-card" data-href="bbs/1362335752301637633">
 
                     <span class="iconfont iconzhiding ksd-iconzhiding"></span>

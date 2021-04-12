@@ -1,0 +1,641 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/include.js"></script>
+    <script src="../static/js/getParameter.js"></script>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/forum.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <style>
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            flex: 1;
+            padding-bottom: 20px;
+        }
+
+        .ksd-layout-bbs-main ol li {
+            list-style: decimal-leading-zero;
+        }
+
+        .layui-container {
+            max-width: 1140px;
+        }
+
+        .navbar.fixed {
+            top: -50px;
+            position: absolute;
+            right: 0;
+            left: 0;
+        }
+
+        .container.w100 {
+            max-width: 100% !important;
+        }
+
+        .layui-container.ksd-content-fixed {
+            position: fixed;
+            margin: 15px auto 100px 290px !important;
+            width: calc(100% - 300px) !important;
+            overflow-y: auto;
+            max-width: 100%;
+        }
+
+        .ksd-content-fixed-over {
+            position: fixed;
+            top: 45px;
+            margin: 10px auto 100px 0 !important;
+            width: 100%;
+            background: #fff;
+            height: 15px;
+            z-index: 111;
+            display: none;
+            max-width: 100%;
+        }
+
+        .ksd-chapterlist-box.fixed {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            bottom: 0;
+            z-index: 1223;
+            width: 280px;
+            border-radius: 0;
+            background: white;
+            margin: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .layui-container .main {
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            margin: 10px auto;
+            padding: 20px;
+            background: #fff;
+        }
+
+        .article-desc {
+            background: #f9f9f9;
+            font-size: 14px;
+            color: #73777a;
+            line-height: 24px;
+            letter-spacing: 0;
+            text-align: left;
+            padding: 20px 10px;
+            margin: 10px 0 20px;
+            overflow: hidden;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .titlefix {
+            position: fixed;
+            top: -4px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            text-align: center;
+            z-index: 1021;
+            background: rgba(239, 243, 245, 0.76) !important;
+            width: 1140px;
+        }
+
+        .title-article .title-msg a.ksd-tiff {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .ksd-tiff.report-red {
+            color: #f44336
+        }
+
+        .title-article .title-msg a.ksd-tiff2 {
+            position: absolute;
+            top: 3px;
+            right: 46px;
+            color: #ff6700 !important;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .ksd-tiff2.active {
+            color: #cf8805
+        }
+
+        .ksdcopylink {
+            background: #1E9FFF;
+            padding: 2px 11px;
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        .ksd-chapterlist-box {
+            background: #eff3f5;
+            margin: 10px 15px 0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .ksd-chapterlist-box a {
+            display: block;
+            padding: 2px;
+        }
+
+        #ksd-chapterlist {
+            display: none;
+        }
+
+        #ksd-chapterlist li {
+            padding: 2px 0;
+        }
+
+        #ksd-chapterlist li a {
+            color: #4183c4;
+        }
+
+        #ksd-chapterlist li a:hover {
+            text-decoration: none;
+            background: #f8f8f8;
+        }
+
+        #ksd-chapterlist li ul li {
+            margin-left: 25px;
+        }
+
+        #ksd-chapterlist li ul li ul li {
+            margin-left: 25px;
+        }
+
+        .achecked {
+            background: #cce5ff;
+            font-weight: bold;
+            padding: 4px !important;
+        }
+
+        #doc-content ul li {
+            list-style: initial !important;
+        }
+
+        .nopagebox {
+            width: 600px;
+            margin: 160px auto;
+            background: #eee;
+            padding: 50px;
+            text-align: center
+        }
+
+        .nopagebox .tit {
+            font-size: 24px;
+        }
+
+        .nopagebox .cont {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        #doc-content img {
+            cursor: zoom-in;
+        }
+
+        .ksd-imgcnt img {
+            cursor: zoom-out
+        }
+
+        .comment-txt-box .eleImg {
+            max-width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            border-style: none;
+            padding-right: 4px;
+        }
+
+        .w-e-panel-tab-content .eleImg {
+            max-width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            border-style: none;
+            padding-right: 10px;
+            padding-top: 2px;
+        }
+
+        #ksd-chapterlist li a {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 264px;
+            white-space: nowrap;
+            display: block;
+        }
+
+        .editormd-html-preview pre {
+            position: relative
+        }
+
+        .editormd-html-preview pre .iconfuzhi {
+            position: absolute;
+            top: 3px;
+            right: 10px;
+            cursor: pointer
+        }
+
+        .editormd-preview-theme-dark pre .iconfuzhi {
+            color: #fff;
+        }
+
+        .comment .avatar {
+            margin-top: 2px;
+            margin-left: 2px;
+            width: 42px;
+            height: 42px;
+            float: left;
+        }
+
+        .comment .avatar img {
+            border-radius: 50%;
+        }
+
+        .comment .content {
+            border: 0;
+            margin-left: 62px;
+            padding-bottom: 12px;
+            margin-bottom: 10px;
+            background: transparent;
+            position: relative;
+        }
+
+        .content .title {
+            border: 0;
+            padding: 0;
+            line-height: 26px;
+            background: transparent;
+            word-break: break-all;
+        }
+
+        .content .author {
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+
+        .comments .timeago {
+            padding-left: 10px;
+            margin-left: 4px;
+            position: relative;
+            color: #8c92a4;
+            display: inline-block;
+            font-size: smaller;
+            font-weight: normal;
+        }
+
+        .children-comments a.avatar {
+            position: absolute;
+            margin: 0 0 0 17px;
+            overflow: hidden;
+        }
+
+        .children-comments .avatar {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        .comment {
+            border-radius: 5px;
+            border: #c9d8db 1px solid;
+            margin-top: 1px;
+        }
+
+        form {
+            width: 100%;
+            position: relative;
+        }
+
+        .comment-icon {
+            margin-top: 1px;
+            position: relative;
+            color: #8c92a4;
+            display: inline-block;
+            font-size: smaller;
+            font-weight: normal;
+        }
+
+        .comment-right-word {
+            float: right;
+            margin-left: 10px;
+            margin-right: 10px;
+            position: relative;
+            color: #8c92a4;
+            display: inline-block;
+            font-size: smaller;
+            font-weight: normal;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            var id = getParameter('id');
+
+            $.get("forumDetails/" + id, function (data) {
+                $("#sharetitle span").text(data.title);
+                $(".ksd-avatar").attr("src", "../static" + data.user_img_url);
+                $(".mx-1").text(data.user_nickname);
+                $("#watch-count").text(data.watch_count);
+
+                $("#post_time").text(data.post_time);
+                $("#category").text(data.category);
+                $("#category").attr("href", "forumIndex?searchKey=" + encodeURI(data.category));
+                $("#main-text").text(data.body);
+
+                var len = data.list.length
+                $("#comment-count").text(len);
+                $(".totalcount").text(len);
+
+                var list = data.list;
+                var comments = '';
+                //显示评论
+                $.each(list, function (index) {
+                    comments += `<div class="comment note" data-depth="0">
+                        <a class="avatar" href="/userIndex/${list[index].user_id}">
+                        <img
+                        class="ui avatar image js-popover-card"
+                        src="../static${list[index].user_img_url}"></a>
+                        <div class="content arrow_box">
+                        <div class="title"><a class="author js-popover-card"
+                    href="/userIndex/${list[index].user_id}">${list[index].user_nickname}</a><span class="timeago"
+                    title="">${list[index].date}</span>
+                    <span class="timeago"
+                    title=""># ${list[index].depth}楼</span>
+
+                    <div class="comment-right-word"><a href="comment/report/${list[index].id}" ><i class="layui-icon layui-icon-tips comment-icon"></i></a> 举报</div>
+                    <div class="comment-right-word"><a href="comment/tread/${list[index].id}" ><i class="layui-icon layui-icon-tread comment-icon"></i></a> 踩</div>`;
+
+                    if (list[index].praise_count === 0) {
+                        comments += `<div class="comment-right-word"><a href="comment/praise/${list[index].id}" ><i class="layui-icon layui-icon-praise comment-icon"></i></a> 赞</div>`;
+                    } else {
+                        comments += `<div class="comment-right-word"><a href="comment/praise/${list[index].id}" ><i class="layui-icon layui-icon-praise comment-icon"></i></a> ${list[index].praise_count}</div>`;
+                    }
+
+                    comments += `</div>
+                    <div class="text note-content" type="note">
+                        <p style="float: left">${list[index].body}</p>
+                    </div>
+                    </div>
+                    </div>`
+                })
+
+                $("#comment-display").html(comments);
+
+            })
+
+            $("#submit-comment").on("click", function () {
+                if ($("#text-input-comment").text() === "") {
+                    alert("请先输入评论哦~");
+                } else {
+                    $.ajax({
+                        url: "comment/add",
+                        type: 'post',
+                        dataType: 'json',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: JSON.stringify({
+                            "post_id": id,
+                            "body": $("#text-input-comment").text()
+                        }),
+                        success: function (data) {
+                            if (data) {
+                                location.reload();
+                            } else {
+                                alert("请您先登录哦~");
+                            }
+                        }
+                    })
+                }
+            })
+
+
+        })
+
+    </script>
+    <div id="header" style="position: sticky;top: -1px;z-index: 5;">
+    </div>
+<body style="background: #eff3f5;overflow-x: hidden">
+
+<div class="layui-container  water-mark ksd-content-fixed-over"></div>
+<div class="layui-container ksd-layui-container water-mark">
+    <div class="ksd-layout-bbs-main layui-row layui-col-space15 main">
+        <div class="layui-col-md12 layui-col-lg12">
+            <div class="title-article" style="text-align: left">
+                <h1 class="title" id="sharetitle">
+
+                    <span>面向对象的知识总结</span>
+
+                </h1>
+                <div class="title-msg">
+                        <span>
+                        <a class="c999" href="/user/aadd" target="_blank">
+                            <img src="" class="ksd-avatar" alt="">
+                            <span class="mx-1">小文</span>
+                        </a>
+
+                    </span>
+                    <span class="c999" style="padding:0 6px;">分类：<a class="c999"
+                                                                    href=""
+                                                                    id="category">学习笔记</a></span>
+                    <span class="c999">浏览：<span id="watch-count">1</span></span>
+                    <span class="c999"><a href="#comments" class="c999">评论：<span id="comment-count">0</span></a></span>
+
+
+                    <a href="javascript:void(0);" class="ksd-tiff2 ksd-tiff-collect"><i
+                            class="iconfont iconadd1 pr-1"></i><span
+                            class="zzmsg">收藏</span></a>
+
+                    <span class="fr c999 ksd-update-span">
+                             <span style="position:relative;top:10px;">
+                                 最后修改于：
+                                <span id="post_time">2021/03/14 23:16:41</span>
+                            </span>
+                        </span>
+                </div>
+            </div>
+            <div class="ksd-chapterlist-box">
+                <div class="expand-chapterlist mb-1">
+                    <span id="main-text">根壮而后，枝叶繁茂</span>
+                </div>
+                <div id="ksd-chapterlist"></div>
+            </div>
+            <div class="copy-text mb-4 mt-4">
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space15 main mt-4" style="margin-bottom: 100px;">
+        <div class="layui-col-md12 layui-col-lg12" style="padding:10px 25px;">
+            <div class="comment-text layui-form">
+                <div id="comments">
+                    <div id="commentbox-post">
+                        <div id="respond-post" class="respond">
+                            <div class="layui-form-item">
+                                <div id="commentarea">
+                                    <div style="border:1px solid #c9d8db;height:100px; z-index:100;"
+                                         class="w-e-text-container">
+                                        <div contenteditable="true" style="width:100%; height:100%;" class="w-e-text"
+                                             id="text-input-comment"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-inline" style="float: right">
+                            <button id="submit-comment" class="layui-btn layui-btn-normal fr"><i
+                                    class="iconfont iconbianji pr-2"></i>提交评论
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="commentbox" data-topicid="1371086758501961730">
+                        <br>
+                        <h3>总共已有 <span class="totalcount">1</span> 条评论</h3>
+                        <br>
+                        <div>
+                            <div class="pinglun">
+                                <div class="comments" id="comment-display">
+                                    <div class="comment note" data-depth="0">
+                                        <a class="avatar" href="/xiaoyuhai">
+                                            <img
+                                                    class="ui avatar image js-popover-card"
+                                                    src=""></a>
+                                        <div class="content arrow_box">
+                                            <div class="title"><a class="author js-popover-card"
+                                                                  href="/xiaoyuhai">小鱼</a><span class="timeago"
+                                                                                                title="2021-02-21 14:20">28天前</span>
+                                                <span class="timeago"
+                                                      title=""># 1楼</span>
+
+                                                <div class="comment-right-word"><a href="comment/report/{id}"><i
+                                                        class="layui-icon layui-icon-tips comment-icon"></i></a> 举报
+                                                </div>
+                                                <div class="comment-right-word"><a href="comment/tread/{id}"><i
+                                                        class="layui-icon layui-icon-tread comment-icon"></i></a> 踩
+                                                </div>
+                                                <div class="comment-right-word"><a href="comment/praise/{id}"><i
+                                                        class="layui-icon layui-icon-praise comment-icon"></i></a> 赞
+                                                </div>
+                                            </div>
+
+                                            <div class="text note-content" type="note">
+                                                <p style="float: left">感谢博主,刚搭建好</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="comment note" data-depth="0"
+                                         data-discussion="discussion-comment-267716-" data-note-id="4305183"
+                                         data-username="xiaoyuhai" id="">
+                                        <a class="avatar" href="/xiaoyuhai"
+                                           name="小鱼"
+                                           username="xiaoyuhai">
+                                            <img
+                                                    class="ui avatar image js-popover-card"
+                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAADs0lEQVRoQ+2ZbUiTURTH/5vb3Jxzc7LmC9mHLBBT0zKh9IMYokKBUKFEFEIv9PKhSAwKRAiqLxUSIdKHiIJeiMKgF0EkikpCErMsFDJrjaXOzaFzU7e4Txgzp8/mc/csnu79urt77u/8zzn33PvINjb3+/EfDRkDlrjaTGGJCwymMFNYYh5gIS0xQRfgMIWZwhLzAAtpiQnKipboIV2UrkVtfiLUCjks49Ooa7OKGlSiA1eu1aG+yIQ4pRxfxrzYdXeIAUfSA0zhSHqXrM1CWgo5vEKrgFb1uyj9PSSp8L68RO7ocbhn0frZhWtd9j/ciwGTql2TbUBVZgI8s36cfGYN6jChKReRotWyPQ15KRrM+Py41ePAlc7RkICbKlORm6zm/nen14nLr0eE8kW+09q8Mg4NJWYYNTEYnphBQ4cNby1uXmAyYUeWHscKk7gz+odrGmfabXhvm6IKTV3hU8UmVGXqIZcBL4cmcPzJ/E6KL4fnosPnBx73u9DYYft3gdP1SlwsT8EqgwqeGT9auuy40T02b8N8wIEqB4sQofRUFSbFav8GI1QxMnx1eHHiqRVDzumwgMnkOZXJR6+2ARcX2rQGVeDAcHzQ58T5F8PLOpaq1xlwuNAIjUIOu3uWC+tX3yapMFMDLs/Qoa7IhITYpTfJF9KEihSt5m1pyDTFgrbK1IDPlppRlqGDDMGL1Zw8oQCTuYHpQVNlKsCBR5HL60PTmxE87BsPGoKhApMCeKEsBRlGFVWVqQAHqvvO6saBVsui+RYqMFngaGESducYoJDLqOWyYOCCNA0aS8wwaRVwz/hwtdOO270OKsDZZjWIM1N1SmoqCwY+tzUZpavjudztG/bg0CMLJqd9VIDJIoGNDI1cFgRclhHPPdckxMZwjQa5JFz/q9EQelsKrA80ui9BwEc2JaE62wC1QhaSust9ALhUkYIt6VoMjnnR+mkcN3sWTxm+w1oQMFmc5NmeXAM6v7tx/6OTz96yXjyIDXIZeT44wbs+3wTBwHwGhIZ0uOvzzWfAfB4K9feKNTokamLgmJrlLvTd1imuiajNNyInWc1V9QG7FzX3JPIufbDAiL3rE6EkF+Mgg3aPHKoQEQtpcpmoLzYhXiVfsBcCOzDqwel2W0TerZaCjxgw6YV3Zum5Mzpw+Px+fPjp4V4zlmpQQlUs3HkRAw53I2LNZ8BieTpadpjC0fK8WHaZwmJ5Olp2mMLR8rxYdpnCYnk6WnaYwtHyvFh2mcJieTpadn4Bs2tnQ6e4X1MAAAAASUVORK5CYII="
+                                                    alt="小鱼-xiaoyuhai"></a>
+                                        <div class="content arrow_box">
+                                            <div class="title"><a class="author js-popover-card"
+                                                                  href="/xiaoyuhai">小鱼</a><span class="timeago"
+                                                                                                title="2021-02-21 14:20">28天前</span>
+                                                <span class="timeago"
+                                                      title=""># 2楼</span>
+                                            </div>
+                                            <div class="text note-content" type="note" typeid="4305183"
+                                                 username="xiaoyuhai">
+                                                <p style="float: left">感谢博主,刚搭建好</p>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="loadmore" style="">
+                            <a href="javascript:void(0);">
+                                (共<span class="totalcount fw">1</span>条 / 当前<span class="fw pages">1</span>页)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadingbox" style="padding: 30px 0px; text-align: center; display: none;"></div>
+</div>
+</div>
+</div>
+</body>
+>
+<!--导入底部-->
+<!-- 尾部 start-->
+<footer id="footer">
+    <meta charset="utf-8">
+    <div class="why_select">
+        <dl>
+            <dt class="fl">
+                <img src="../static/images/icon_1.jpg" alt="">
+            </dt>
+            <dd>
+                <h1>房车齐全</h1>
+                <h2>房车全自主选，随心买</h2>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="fl">
+                <img src="../static/images/icon_2.jpg" alt="">
+            </dt>
+            <dd>
+                <h1>便利快捷</h1>
+                <h2>24小时不打烊，随时预定</h2>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="fl">
+                <img src="../static/images/icon_3.jpg" alt="">
+            </dt>
+            <dd>
+                <h1>安全支付</h1>
+                <h2>知名支付工具，放心预定</h2>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="fl">
+                <img src="../static/images/icon_4.jpg" alt="">
+            </dt>
+            <dd style="margin-right:0px;">
+                <h1>贴心服务</h1>
+                <h2>客服全年无休，安心买</h2>
+            </dd>
+        </dl>
+    </div>
+    <div class="company">
+        <p>xx有限公司 版权所有Copyright xxxx-xxxx, All Rights Reserved xxxxxxxxxx</p>
+    </div>
+</footer>
+</html>

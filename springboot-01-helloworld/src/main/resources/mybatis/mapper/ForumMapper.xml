@@ -15,5 +15,25 @@
         SELECT category FROM post GROUP BY category ORDER BY COUNT(id) DESC LIMIT 10;
     </select>
 
+    <select id="selectPostById" resultType="post">
+        select * from post where id = #{id}
+    </select>
 
+    <select id="selectCommentsByPostId" resultType="comment">
+        select * from comment where post_id = #{post_id}
+    </select>
+
+    <select id="selectMaxDepth" resultType="int">
+        SELECT IFNULL(MAX(depth),0) FROM COMMENT WHERE post_id = #{post_id};
+    </select>
+
+    <insert id="addComment" parameterType="hashmap">
+        insert into comment (`id`,
+             `body`,
+             `post_id`, 
+             `user_id`,
+             `depth`,
+             `praise_count`,
+             `date`) values (null , #{body}, #{post_id},#{user_id},#{depth},0 ,null );
+    </insert>
 </mapper>
