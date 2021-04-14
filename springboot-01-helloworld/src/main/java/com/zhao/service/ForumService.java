@@ -23,4 +23,14 @@ public interface ForumService {
     int selectDepthOfComment(int post_id);
 
     void addComment(HashMap<String, Object> map);
+
+    void addWatchCount(int post_id);
+
+    boolean commentPraise(int comment_id, int liked_user_id, int like_user_id);
+
+    boolean commentReport(int comment_id, int reported_user_id, int report_user_id, String reason);
+
+    void reduceCommentPraiseCount(int comment_id);
+
+    int getCommentPraiseCount(int comment_id);
 }

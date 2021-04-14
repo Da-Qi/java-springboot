@@ -36,4 +36,68 @@
              `praise_count`,
              `date`) values (null , #{body}, #{post_id},#{user_id},#{depth},0 ,null );
     </insert>
+
+    <update id="addWatchCount">
+        UPDATE post
+        SET `watch_count` = watch_count + 1
+        WHERE `id` = #{id};
+    </update>
+
+    <insert id="commentPraise" parameterType="hashmap">
+        INSERT INTO `like`
+            (`id`,
+             `like_user_id`,
+             `liked_user_id`,
+             `comment_id`,
+             `state`,
+             `time`)
+        VALUES (null,
+        #{like_user_id},
+        #{liked_user_id},
+        #{comment_id},
+        #{state},
+        null );
+    </insert>
+
+    <update id="addCommentPraiseCount">
+        UPDATE comment
+        SET `praise_count` = praise_count + 1
+        WHERE `id` = #{comment_id};
+    </update>
+
+    <select id="selectPraiseIfExists" resultType="int">
+        select count(*) from `like` where like_user_id = #{like_user_id} and liked_user_id= #{liked_user_id} and comment_id = #{comment_id}
+    </select>
+
+    <select id="selectReportIfExists" resultType="int">
+        select count(*) from `report_comment` where report_user_id = #{report_user_id} and reported_user_id= #{reported_user_id} and comment_id = #{comment_id}
+    </select>
+
+    <insert id="commentReport" parameterType="hashmap">
+        INSERT INTO `report_comment`
+            (`id`,
+             `report_user_id`,
+             `reported_user_id`,
+             `comment_id`,
+             `reason`,
+             `state`,
+             `time`)
+        VALUES (null,
+        #{report_user_id},
+        #{reported_user_id},
+        #{comment_id},
+        #{reason},
+        #{state},
+        null );
+    </insert>
+
+    <update id="reduceCommentPraiseCount">
+        UPDATE comment
+        SET `praise_count` = praise_count - 1
+        WHERE `id` = #{comment_id};
+    </update>
+
+    <select id="getCommentPraiseCount" resultType="int">
+        select praise_count from comment where id = #{comment_id}
+    </select>
 </mapper>

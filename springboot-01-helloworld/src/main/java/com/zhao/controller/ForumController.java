@@ -113,29 +113,29 @@ public class ForumController {
             json.put("body", comment.body);
             int userId = comment.user_id;
             User userById = userService.findUserById(userId);
-            json.put("user_nickname",userById.user_nickname);
-            json.put("user_id",userById.user_id);
-            json.put("user_img_url",userById.user_img_url);
-            json.put("date",comment.date);
-            json.put("depth",comment.depth);
-            json.put("praise_count",comment.praise_count);
+            json.put("user_nickname", userById.user_nickname);
+            json.put("user_id", userById.user_id);
+            json.put("user_img_url", userById.user_img_url);
+            json.put("date", comment.date);
+            json.put("depth", comment.depth);
+            json.put("praise_count", comment.praise_count);
 
             jsonArray.add(json);
         }
-        jsonObject.put("list",jsonArray);
+        jsonObject.put("list", jsonArray);
         return jsonObject.toString();
     }
 
     @RequestMapping(value = "/comment/add", produces = "application/json;charset=utf-8")
-    public boolean addComment(@RequestBody JSONObject jsonObject,HttpServletRequest request) {
+    public boolean addComment(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null){
+        if (user == null) {
             return false;
-        }else {
+        } else {
             HashMap<String, Object> map = new HashMap<>();
-            map.put("body",jsonObject.getString("body"));
-            map.put("post_id",jsonObject.get("post_id"));
-            map.put("user_id",user.user_id);
+            map.put("body", jsonObject.getString("body"));
+            map.put("post_id", jsonObject.get("post_id"));
+            map.put("user_id", user.user_id);
 
             int depth = forumService.selectDepthOfComment(Integer.parseInt(jsonObject.getString("post_id")));
             map.put("depth", depth + 1);
@@ -144,6 +144,63 @@ public class ForumController {
             return true;
         }
     }
-    
+
+    //文章浏览量+1
+    @RequestMapping(value = "/post/addWatchCount/{id}")
+    public void addWatchCount(@PathVariable String id) {
+        forumService.addWatchCount(Integer.parseInt(id));
+    }
+
+
+    //评论点赞
+    @RequestMapping(value = "/comment/praise/{comment_id}/{user_id}", produces = "application/json;charset=utf-8")
+    public String commentPraise(@PathVariable String comment_id, @PathVariable String user_id, HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            jsonObject.put("code", 0);
+        } else {
+            boolean flag = forumService.commentPraise(Integer.parseInt(comment_id), Integer.parseInt(user_id), user.user_id);
+
+            int count = forumService.getCommentPraiseCount(Integer.parseInt(comment_id));
+            if (flag) {
+                jsonObject.put("code", 1);
+            } else {
+                jsonObject.put("code", 2);
+            }
+            jsonObject.put("praise_count", count);
+        }
+        return jsonObject.toString();
+    }
+
+    //评论点踩
+    @RequestMapping(value = "/comment/tread/{comment_id}", produces = "application/json;charset=utf-8")
+    public String commentTread(@PathVariable String comment_id, HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            jsonObject.put("code", 0);
+        } else {
+            forumService.reduceCommentPraiseCount(Integer.parseInt(comment_id));
+            jsonObject.put("code", 1);
+            int count = forumService.getCommentPraiseCount(Integer.parseInt(comment_id));
+            jsonObject.put("praise_count", count);
+        }
+        return jsonObject.toString();
+
+    }
+
+    //评论举报
+    @RequestMapping(value = "/comment/report/{comment_id}/{user_id}")
+    public int commentReport(@PathVariable String comment_id, @PathVariable String user_id, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        String reason = request.getParameter("reason");
+        if (user == null) {
+            return 0;
+        } else {
+            boolean flag = forumService.commentReport(Integer.parseInt(comment_id), Integer.parseInt(user_id), user.user_id, reason);
+            return flag ? 1 : 2;
+        }
+    }
 
 }

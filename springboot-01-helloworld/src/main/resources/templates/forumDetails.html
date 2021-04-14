@@ -354,8 +354,12 @@
         $(function () {
             var id = getParameter('id');
 
+            //获取文章的具体信息，包含评论
             $.get("forumDetails/" + id, function (data) {
+                console.log(data)
                 $("#sharetitle span").text(data.title);
+
+                document.title = data.title;
                 $(".ksd-avatar").attr("src", "../static" + data.user_img_url);
                 $(".mx-1").text(data.user_nickname);
                 $("#watch-count").text(data.watch_count);
@@ -385,13 +389,13 @@
                     <span class="timeago"
                     title=""># ${list[index].depth}楼</span>
 
-                    <div class="comment-right-word"><a href="comment/report/${list[index].id}" ><i class="layui-icon layui-icon-tips comment-icon"></i></a> 举报</div>
-                    <div class="comment-right-word"><a href="comment/tread/${list[index].id}" ><i class="layui-icon layui-icon-tread comment-icon"></i></a> 踩</div>`;
+                    <div class="comment-right-word"><a id="report" href="javascript:void(0);" onclick="report(${list[index].id}, ${list[index].user_id}, \'${list[index].user_nickname}\')"><i class="layui-icon layui-icon-tips comment-icon"></i></a> 举报</div>
+                    <div class="comment-right-word"><a id="tread_${list[index].id}" href="javascript:void(0);" onclick="tread(${list[index].id}, ${list[index].user_id}, \'${list[index].user_nickname}\')"><i class="layui-icon layui-icon-tread comment-icon"></i></a> 踩</div>`;
 
                     if (list[index].praise_count === 0) {
-                        comments += `<div class="comment-right-word"><a href="comment/praise/${list[index].id}" ><i class="layui-icon layui-icon-praise comment-icon"></i></a> 赞</div>`;
+                        comments += `<div class="comment-right-word" id="praise_${list[index].id}"><a id="praise" href="javascript:void(0);" onclick="praise(${list[index].id}, ${list[index].user_id}, \'${list[index].user_nickname}\')" ><i class="layui-icon layui-icon-praise comment-icon"></i></a> <span>赞</span></div>`;
                     } else {
-                        comments += `<div class="comment-right-word"><a href="comment/praise/${list[index].id}" ><i class="layui-icon layui-icon-praise comment-icon"></i></a> ${list[index].praise_count}</div>`;
+                        comments += `<div class="comment-right-word" id="praise_${list[index].id}"><a  href="javascript:void(0);" onclick="praise(${list[index].id}, ${list[index].user_id}, \'${list[index].user_nickname}\')" ><i class="layui-icon layui-icon-praise comment-icon"></i></a> <span>${list[index].praise_count}</span></div>`;
                     }
 
                     comments += `</div>
@@ -432,8 +436,66 @@
                 }
             })
 
+            //进入页面时，浏览量加1
+            $.get("post/addWatchCount/" + id)
+
 
         })
+
+        function praise(comment_id, user_id, user_nickname) {
+            var cookie_position = document.cookie.indexOf(user_nickname)
+            if (cookie_position !== -1) {
+                alert("不能更赞同自己啦~~")
+            } else {
+                $.get("/comment/praise/" + comment_id + "/" + user_id, function (flag) {
+                    if (flag.code === 1) {
+                        $("#praise_" + comment_id + " span").text(flag.praise_count)
+                    } else if (flag === 0) {
+                        alert("请您先登录哦~")
+                    } else {
+                        alert("您已与这位用户所见略同~")
+                    }
+                })
+            }
+        }
+
+        function tread(comment_id, user_id, user_nickname) {
+            $.get("/comment/tread/" + comment_id, function (flag) {
+                if (flag.code === 1) {
+                    $("#praise_" + comment_id + " span").text(flag.praise_count)
+                } else if (flag === 0) {
+                    alert("请您先登录哦~")
+                }
+            })
+
+            $("#tread_" + comment_id).removeAttr("onclick");
+            setTimeout(function () {
+                $("#tread_" + comment_id).attr("onclick", "tread(" + comment_id + ", " + user_id + ", '" + user_nickname + "')")
+            }, 1000 * 60 * 60 * 5);
+        }
+
+        function report(comment_id, user_id, user_nickname) {
+            var cookie_position = document.cookie.indexOf(user_nickname)
+            if (cookie_position !== -1) {
+                var res = prompt("您举报自己的理由：")
+            } else {
+                var res = prompt("举报理由：")
+            }
+            if (res) {
+                $.get("/comment/report/" + comment_id + "/" + user_id + "?reason=" + encodeURI(res), function (flag) {
+                    if (flag === 1) {
+                        window.alert("您已成功举报这条评论，我们将立即处理！")
+                        location.reload()
+                    } else if (flag === 0) {
+                        alert("请您先登录哦~")
+                    } else {
+                        alert("您已经举报过一次哦")
+                    }
+                })
+            } else {
+                alert("请您填写举报理由哦")
+            }
+        }
 
     </script>
     <div id="header" style="position: sticky;top: -1px;z-index: 5;">
@@ -536,7 +598,8 @@
                                                         class="layui-icon layui-icon-tread comment-icon"></i></a> 踩
                                                 </div>
                                                 <div class="comment-right-word"><a href="comment/praise/{id}"><i
-                                                        class="layui-icon layui-icon-praise comment-icon"></i></a> 赞
+                                                        class="layui-icon layui-icon-praise comment-icon"
+                                                        style="color: red;"></i></a> 赞
                                                 </div>
                                             </div>
 
@@ -545,31 +608,6 @@
                                             </div>
                                         </div>
 
-                                    </div>
-                                    <div class="comment note" data-depth="0"
-                                         data-discussion="discussion-comment-267716-" data-note-id="4305183"
-                                         data-username="xiaoyuhai" id="">
-                                        <a class="avatar" href="/xiaoyuhai"
-                                           name="小鱼"
-                                           username="xiaoyuhai">
-                                            <img
-                                                    class="ui avatar image js-popover-card"
-                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAADs0lEQVRoQ+2ZbUiTURTH/5vb3Jxzc7LmC9mHLBBT0zKh9IMYokKBUKFEFEIv9PKhSAwKRAiqLxUSIdKHiIJeiMKgF0EkikpCErMsFDJrjaXOzaFzU7e4Txgzp8/mc/csnu79urt77u/8zzn33PvINjb3+/EfDRkDlrjaTGGJCwymMFNYYh5gIS0xQRfgMIWZwhLzAAtpiQnKipboIV2UrkVtfiLUCjks49Ooa7OKGlSiA1eu1aG+yIQ4pRxfxrzYdXeIAUfSA0zhSHqXrM1CWgo5vEKrgFb1uyj9PSSp8L68RO7ocbhn0frZhWtd9j/ciwGTql2TbUBVZgI8s36cfGYN6jChKReRotWyPQ15KRrM+Py41ePAlc7RkICbKlORm6zm/nen14nLr0eE8kW+09q8Mg4NJWYYNTEYnphBQ4cNby1uXmAyYUeWHscKk7gz+odrGmfabXhvm6IKTV3hU8UmVGXqIZcBL4cmcPzJ/E6KL4fnosPnBx73u9DYYft3gdP1SlwsT8EqgwqeGT9auuy40T02b8N8wIEqB4sQofRUFSbFav8GI1QxMnx1eHHiqRVDzumwgMnkOZXJR6+2ARcX2rQGVeDAcHzQ58T5F8PLOpaq1xlwuNAIjUIOu3uWC+tX3yapMFMDLs/Qoa7IhITYpTfJF9KEihSt5m1pyDTFgrbK1IDPlppRlqGDDMGL1Zw8oQCTuYHpQVNlKsCBR5HL60PTmxE87BsPGoKhApMCeKEsBRlGFVWVqQAHqvvO6saBVsui+RYqMFngaGESducYoJDLqOWyYOCCNA0aS8wwaRVwz/hwtdOO270OKsDZZjWIM1N1SmoqCwY+tzUZpavjudztG/bg0CMLJqd9VIDJIoGNDI1cFgRclhHPPdckxMZwjQa5JFz/q9EQelsKrA80ui9BwEc2JaE62wC1QhaSust9ALhUkYIt6VoMjnnR+mkcN3sWTxm+w1oQMFmc5NmeXAM6v7tx/6OTz96yXjyIDXIZeT44wbs+3wTBwHwGhIZ0uOvzzWfAfB4K9feKNTokamLgmJrlLvTd1imuiajNNyInWc1V9QG7FzX3JPIufbDAiL3rE6EkF+Mgg3aPHKoQEQtpcpmoLzYhXiVfsBcCOzDqwel2W0TerZaCjxgw6YV3Zum5Mzpw+Px+fPjp4V4zlmpQQlUs3HkRAw53I2LNZ8BieTpadpjC0fK8WHaZwmJ5Olp2mMLR8rxYdpnCYnk6WnaYwtHyvFh2mcJieTpadn4Bs2tnQ6e4X1MAAAAASUVORK5CYII="
-                                                    alt="小鱼-xiaoyuhai"></a>
-                                        <div class="content arrow_box">
-                                            <div class="title"><a class="author js-popover-card"
-                                                                  href="/xiaoyuhai">小鱼</a><span class="timeago"
-                                                                                                title="2021-02-21 14:20">28天前</span>
-                                                <span class="timeago"
-                                                      title=""># 2楼</span>
-                                            </div>
-                                            <div class="text note-content" type="note" typeid="4305183"
-                                                 username="xiaoyuhai">
-                                                <p style="float: left">感谢博主,刚搭建好</p>
-                                            </div>
-
-
-                                        </div>
                                     </div>
                                 </div>
                             </div>
