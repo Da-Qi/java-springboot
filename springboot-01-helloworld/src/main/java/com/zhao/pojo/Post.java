@@ -16,4 +16,5 @@ public class Post {
     public int watch_count;
     public String post_time;
     public String category;
+    public boolean state;
 }

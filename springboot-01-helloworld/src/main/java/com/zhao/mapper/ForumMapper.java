@@ -40,4 +40,8 @@ public interface ForumMapper {
     void reduceCommentPraiseCount(int comment_id);
 
     int getCommentPraiseCount(int comment_id);
+
+    int getAllComments();
+
+    void addPost(HashMap<String, String> map);
 }

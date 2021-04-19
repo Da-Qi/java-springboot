@@ -100,4 +100,30 @@
     <select id="getCommentPraiseCount" resultType="int">
         select praise_count from comment where id = #{comment_id}
     </select>
+
+    <select id="getAllComments" resultType="int">
+        select count(id) from comment;
+    </select>
+
+    <insert id="addPost" parameterType="hashmap">
+        INSERT INTO `post`
+            (`id`,
+             `title`,
+             `description`,
+             `body`,
+             `user_id`,
+             `watch_count`,
+             `post_time`,
+             `category`,
+             `state`)
+VALUES (null,
+        #{title},
+        #{description},
+        #{body},
+        #{user_id},
+        0,
+        null ,
+        #{category},
+        #{state});
+    </insert>
 </mapper>

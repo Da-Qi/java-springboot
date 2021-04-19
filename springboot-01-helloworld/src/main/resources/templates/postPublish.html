@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发表文章</title>
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/include.js"></script>
+    <script src="../static/js/getParameter.js"></script>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/forum.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+
+    <link rel="stylesheet" href="../static/css/common.css">
+
+</head>
+<style>
+    body {
+        line-height: 24px;
+        font: 14px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+    }
+
+    .ksd-topic-footer {
+        position: fixed;
+        right: 0;
+        left: 0;
+        top: 0;
+        z-index: 10000;
+        background: #fff;
+        text-align: center;
+        box-shadow: 0 0 1em #b7b7b7;
+    }
+
+    .ksd-topic-footer .ksd-back {
+        display: inline-block;
+        width: 128px;
+        text-align: center;
+        height: 56px;
+        line-height: 56px;
+        background: #f1f1f1;
+    }
+
+    .ksd-back {
+        margin-right: 5px;
+    }
+
+    .float-left {
+        float: left !important;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .tp1 {
+        top: 1px !important;
+    }
+
+    .pr {
+        position: relative;
+    }
+
+    .sendbtn {
+        display: inline-block;
+        margin: 10px 24px 10px 0;
+        width: 128px;
+        float: right;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+        background: #37f;
+        cursor: pointer;
+        transition: 100ms;
+    }
+
+    .pr-2, .px-2 {
+        padding-right: .5rem !important;
+    }
+
+    .ksd-container {
+        width: 99%;
+        margin: 0 auto;
+        position: relative;
+        top: 60px;
+    }
+
+    .p-3 {
+        padding: 1rem !important;
+    }
+
+    .mt-1, .my-1 {
+        margin-top: .25rem !important;
+    }
+
+    .rounded {
+        border-radius: .25rem !important;
+    }
+
+    .bg-white {
+        background-color: #fff !important;
+    }
+
+    .row-1 {
+        display: -ms-flexbox;
+        display: flow;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .bootstrap-tagsinput {
+        background-color: #fff;
+        border: 1px solid #eee;
+        display: inline-block;
+        padding: 4px 26px;
+        color: #666;
+        vertical-align: middle;
+        max-width: 100%;
+        line-height: 40px;
+        cursor: text;
+        height: 50px;
+        outline: none;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .col-md-9 {
+        -ms-flex: 0 0 75%;
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+
+    .editormd, .blog-main input, .blog-main select, .blog-main .tagsinput-primary {
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+        -webkit-writing-mode: horizontal-tb !important;
+        text-rendering: auto;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: start;
+        -webkit-rtl-ordering: logical;
+        cursor: text;
+        margin: 0em;
+        font: 400 13.3333px Arial;
+        padding: 1px 2px;
+        border-width: 2px;
+        border-style: inset;
+        border-image: initial;
+    }
+</style>
+
+<script>
+    $(function () {
+        $.get("getAllCategory", function (data) {
+            var selects = ``;
+            $.each(data, function (index) {
+                selects += `<option value="${data[index]}">${data[index]}</option>`;
+            })
+            $(".custom-select").append(selects);
+        })
+
+        $("#ksd-sendbtn-submit").on("click", function () {
+            var title = $("#title").val();
+            var category = $("#category").val()
+            var topicDescription = $("#topicDescription").val()
+            var content = $("#content").val()
+            //alert("标题不能为空")
+            if (title === "") {
+                alert("标题不能为空哦")
+            } else if (category === "0") {
+                alert("文章类别不能为空哦")
+            } else if (topicDescription === "") {
+                alert("描述不能为空哦")
+            } else if (content === "") {
+                alert("正文不能为空哦")
+            } else {
+                $.ajax({
+                    url: "post/publish",
+                    dataType: "json",
+                    type: "post",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        "title": title,
+                        "category": category,
+                        "topicDescription": topicDescription,
+                        "content": content,
+                        "state": 1
+                    }),
+                    success: function (data) {
+                        if (data) {
+                            alert("您已成功发表文章");
+                        }
+                    }
+                })
+            }
+        })
+        $("#ksd-sendbtn-submit2").on("click", function () {
+            var title = $("#title").val();
+            var category = $("#category").val()
+            var topicDescription = $("#topicDescription").val()
+            var content = $("#content").val()
+            //alert("标题不能为空")
+            if (title === "") {
+                alert("标题不能为空哦")
+            } else if (category === "0") {
+                alert("文章类别不能为空哦")
+            } else if (topicDescription === "") {
+                alert("描述不能为空哦")
+            } else if (content === "") {
+                alert("正文不能为空哦")
+            } else {
+                $.ajax({
+                    url: "post/publish",
+                    dataType: "json",
+                    type: "post",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        "title": title,
+                        "category": category,
+                        "topicDescription": topicDescription,
+                        "content": content,
+                        "state": 0
+                    }),
+                    success: function (data) {
+                        if (data) {
+                            alert("您已成功保存草稿");
+                        }
+                    }
+                })
+            }
+        })
+
+        $(".ksd-back").on("click", function () {
+            window.history.back();
+        })
+
+    })
+</script>
+
+<body style="background:#f3f5f6;" data-vip="0">
+<div>
+    <form class="needs-validation" id="ksd-topic-form">
+        <div class="ksd-topic-footer">
+
+            <a href="javascript:void(0);" class="ksd-back float-left"><i class="layui-icon layui-icon-left pr tp1"></i>
+                返回</a>
+
+            <span class="sendbtn" id="ksd-sendbtn-submit"><i
+                    class="layui-icon layui-icon-addition iconadd pr-2"></i><span
+                    class="text">发布文章</span><span class="ksd-timer-bac"></span></span>
+
+            <span class="sendbtn" id="ksd-sendbtn-submit2" style="background: #4caf50;"><i
+                    class="layui-icon layui-icon-addition iconadd pr-2"></i><span class="text">保存草稿</span></span>
+        </div>
+        <main class="ksd-container mt-1 p-3 bg-white rounded">
+            <div class="row row-1">
+                <div class="col-md-12 blog-main ksd-blog-main" style="padding: 20px;">
+                    <div class="col-md-12 order-md-1">
+                        <div class="row row-1">
+                            <div class="col-md-9  blog-main">
+                                <input type="text" style="text-indent: 1em;width: 100%" name="topicTitle"
+                                       onkeyup=""
+                                       class="bootstrap-tagsinput" placeholder="请输入文章标题" maxlength="100" id="title"
+                                       required="">
+                            </div>
+
+                            <div class="col-md-2">
+                                <select name="topicCategoryId" style="text-indent: 1em; width: 100%"
+                                        class="custom-select bootstrap-tagsinput d-block w-100" onchange=""
+                                        id="category" placeholder="请选择文章类别">
+                                    <option value="0" selected="selected" disabled="disabled">请选择文章类别</option>
+                                </select>
+                            </div>
+                            <div class="col-md-9 mb-3 mt-3" style="margin-top: 15px">
+                                <input type="text" name="topicDescription" onkeyup=""
+                                       class="bootstrap-tagsinput" placeholder="描述(用于展示首页上)" maxlength="250"
+                                       style="text-indent: 1em; width: 100%" id="topicDescription" value="" required="">
+                            </div>
+
+                            <div id="app" class="col-md-12 mb-3">
+                                <div id="blog-content" class="editormd editormd-vertical"
+                                     style="width: 95%; height: 637px;">
+                                    <textarea name="topicContent" id="content"
+                                              placeholder="(填写文章正文)"
+                                              style="width:98%;height:100%;border:none;margin-left: 15px;font-size: 15px"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </form>
+</div>
+
+</body>
+</html>

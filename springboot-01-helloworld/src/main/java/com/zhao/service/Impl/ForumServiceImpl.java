@@ -117,4 +117,19 @@ public class ForumServiceImpl implements ForumService {
         return forumMapper.getCommentPraiseCount(comment_id);
     }
 
+    @Override
+    public int selectAllComments() {
+        return forumMapper.getAllComments();
+    }
+
+    @Override
+    public boolean addPost(HashMap<String, String> map) {
+        try {
+            forumMapper.addPost(map);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }

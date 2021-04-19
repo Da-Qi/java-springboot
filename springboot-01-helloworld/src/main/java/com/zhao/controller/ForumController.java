@@ -47,6 +47,9 @@ public class ForumController {
         int user_num = userService.selectAllUser();
         jsonObject.put("user_num", user_num);
 
+        int comment_num = forumService.selectAllComments();
+        jsonObject.put("comment_num", comment_num);
+
         //论坛内容相关
         jsonObject.put("totalPage", pageResult.getTotalPages());
         jsonObject.put("totalCount", pageResult.getTotalSize());
@@ -62,6 +65,11 @@ public class ForumController {
             postObject.put("post_time", post.post_time);
             postObject.put("watch_count", post.watch_count);
             postObject.put("category", post.category);
+
+            //获取文章的评论数
+            List<Comment> comments = forumService.selectCommentsByPostId(post.id);
+            postObject.put("comment_count", comments.size());
+
             int user_id = post.user_id;
             User user = userService.findUserById(user_id);
             postObject.put("user_img_url", user.user_img_url);
@@ -202,5 +210,40 @@ public class ForumController {
             return flag ? 1 : 2;
         }
     }
+
+    //发布文章
+    //右侧栏的分类
+    @RequestMapping(value = "/getAllCategory", produces = "application/json;charset=utf-8")
+    public String getAllCategory() {
+        List<String> categorys = forumService.selectTopTenCategory();
+        JSONArray categoryArray = new JSONArray();
+        categoryArray.addAll(categorys);
+        return categoryArray.toString();
+    }
+
+    //发布文章
+    @RequestMapping(value = "/post/publish", produces = "application/json;charset=utf-8")
+    public boolean postPublish(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+
+
+        String title = jsonObject.getString("title");
+        String category = jsonObject.getString("category");
+        String topicDescription = jsonObject.getString("topicDescription");
+        String content = jsonObject.getString("content");
+        String state = jsonObject.getString("state");
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("title", title);
+        map.put("category", category);
+        map.put("description", topicDescription);
+        map.put("body", content);
+        map.put("state", state);
+        map.put("user_id", String.valueOf(user.user_id));
+
+        return forumService.addPost(map);
+    }
+
+
 
 }

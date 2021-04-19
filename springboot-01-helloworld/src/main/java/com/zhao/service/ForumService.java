@@ -33,4 +33,8 @@ public interface ForumService {
     void reduceCommentPraiseCount(int comment_id);
 
     int getCommentPraiseCount(int comment_id);
+
+    int selectAllComments();
+
+    boolean addPost(HashMap<String, String> map);
 }

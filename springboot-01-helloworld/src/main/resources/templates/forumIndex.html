@@ -149,6 +149,16 @@
             load(null, searchKey);
         })
 
+        function publishArticle() {
+            var cookie_position = getCookie('nickname')
+            if (cookie_position !== '') {
+                //用户已经登录
+                window.location = "postPublish.html";
+            } else {
+                //未登录
+                window.alert("请您先进行登录哦")
+            }
+        }
         function load(currentPage, searchKey) {
             if (currentPage === null) {
                 currentPage = 1;
@@ -163,6 +173,7 @@
                 $(".stotal").html('( ' + pb.totalCount + ' )');
                 $(".user_num").html(pb.user_num);
                 $(".post_num").html(pb.totalCount);
+                $(".comment_num").html(pb.comment_num);
 
                 var lis = "";
 
@@ -248,7 +259,6 @@
 
                     route_lis += `<div class="title-article ksd-title-article-link list-card" data-href="forumDetails?id=${route.id}">
                                 <span class="iconfont iconzhiding ksd-iconzhiding"></span>
-                                <!--指向文章详情页-->
                                 <a target="_blank" href="forumDetails?id=${route.id}" class="hlink">
                                     <h1>${route.title}</h1>
                                 </a>
@@ -266,7 +276,7 @@
                                     </span>
                                     <span class="pr-2 pl-2 ksd-screen-time-no"><label
                                             class="fw">时间：</label><span>${route.post_time}</span></span>
-                                    <span class="pr-2 none"><label class="fw">评论数：</label><span>1010</span></span>
+                                    <span class="pr-2 none"><label class="fw">评论数：</label><span>${route.comment_count}</span></span>
                                     <span class=" pr-2"><label class="fw">浏览：</label><span>${route.watch_count}</span></span>
                                     <span><label class="fw">分类：</label>
                                         <a href="forumIndex?searchKey=${route.category}" class="ksd-topic-tags">${route.category}</a>
@@ -377,7 +387,7 @@
         </div>
         <div class="sidebar layui-col-md3 layui-col-lg3">
             <div class="ads">
-                <a href="javascript:void(0);" data-href="/topic/to-add"
+                <a href="javascript:void(0);" onclick="publishArticle()"
                    class="layui-btn nav-link-down nav-link-login layui-btn-normal" style="width: 100%;">
                     <span class="layui-icon layui-icon-edit"></span>
                     发布文章
