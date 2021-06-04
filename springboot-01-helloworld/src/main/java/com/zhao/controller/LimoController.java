@@ -182,4 +182,21 @@ public class LimoController {
         });
         return jsonArray.toString();
     }
+
+    @RequestMapping(value = "admin/limo/getAll", produces = "application/json;charset=utf-8")
+    public String getAll() {
+        List<Limo> limos = limoService.getAllLimo();
+        JSONArray jsonArray = new JSONArray();
+        limos.forEach(limo -> {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", limo.id);
+            jsonObject.put("name", limo.name);
+            jsonObject.put("price", limo.rent);
+            jsonObject.put("details", limo.details);
+            jsonObject.put("merchant_id", limo.merchant_id);
+            jsonObject.put("type", limo.type.toString());
+            jsonArray.add(jsonObject);
+        });
+        return jsonArray.toString();
+    }
 }

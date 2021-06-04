@@ -116,4 +116,9 @@ public class LimoServiceImpl implements LimoService {
     public List<Limo> getLimoRecommend() {
         return limoMapper.getLimoRecommend();
     }
+
+    @Override
+    public List<Limo> getAllLimo() {
+        return limoMapper.selectAll();
+    }
 }

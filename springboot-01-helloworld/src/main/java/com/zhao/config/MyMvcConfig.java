@@ -20,7 +20,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/personal.html").setViewName("personal");
         //管理员
-        registry.addViewController("/admin/index").setViewName("admin/1");
+        registry.addViewController("/admin/index").setViewName("background");
         //页面详情
         registry.addViewController("/limo_details.html").setViewName("limo_details");
         registry.addViewController("/route_details.html").setViewName("route_details");
@@ -40,12 +40,17 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/forumIndex").setViewName("forumIndex");
         registry.addViewController("/forumDetails").setViewName("forumDetails");
         registry.addViewController("/postPublish.html").setViewName("postPublish");
+        registry.addViewController("admin/background.html").setViewName("admin/background");
+        registry.addViewController("admin/top.html").setViewName("admin/top");
+        registry.addViewController("admin/left.html").setViewName("admin/left");
+        registry.addViewController("admin/welcome.html").setViewName("admin/welcome");
 
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
     }
 
     @Bean

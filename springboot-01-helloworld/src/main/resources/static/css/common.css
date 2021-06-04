@@ -249,6 +249,7 @@ h1, h2, h3, h4, h5, h6 {
     float: left;
 }
 #footer {
+    margin: auto;
     width: 100%;
     background: #3d3d3f;
 }

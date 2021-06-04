@@ -14,10 +14,6 @@
     <script src="../static/js/bootstrap.min.js"></script>
 </head>
 <style>
-    .top_banner {
-        background: url("../static/images/head_back.png") repeat-x 5px;
-        width: 100%;
-    }
 
     .user_img {
         border-radius: 50%;
@@ -50,16 +46,23 @@
     }
 
     .user_content {
-        height: 1000px;
-        width: 95%;
+        margin: auto;
+        height: 700px;
+        width: 65%;
     }
 
     .user_personalInfo {
         float: left;
         padding-left: 10px;
+        padding-top: 25px;
+        width: 60%;
+        margin-left: 20px;
+    }
+    .sidebar{
         padding-top: 50px;
-        width: 70%;
-        margin-left: 50px;
+        margin-left: 25px;
+        float: right;
+        width: 20%;
     }
 </style>
 
@@ -76,8 +79,14 @@
         return "";
     }
 
-    $(document).ready(function () {
+    $(function () {
         /*获取个人信息*/
+        var id = getParameter("id");
+        if (id !== null){
+            //访问的人不是自己
+        }else{
+            //展示个人发帖
+        }
         $.ajax({
             url: "user/info",
             type: "get",
@@ -113,7 +122,6 @@
         });
 
         $("#submit_info_btn").click(function () {
-            alert("我被点了");
             var file = $("#fileupload").get(0).files[0];
             if (file) {
                 var formData = new FormData();
@@ -187,96 +195,356 @@
             location.href = 'personal.html';
         })
     });
+
+    $("#personal_info_btn").on("click",function () {
+        $("#user_personalInfo").show();
+
+    })
 </script>
 
-<body>
+<style>
+    .title-article {
+        padding: 15px;
+        text-align: left;
+        background: #fff;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .list-card {
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .title-article .hlink {
+        overflow: hidden;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    a {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .title-article .hlink2 {
+        overflow: hidden;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .title-article .title-msg {
+        margin-bottom: 0px;
+        font-size: 12px;
+        color: #999;
+    }
+
+    .title-article .title-msg span {
+        margin-right: 3px;
+    }
+
+    .title-article .title-msg a {
+        color: #999;
+    }
+
+    .ksd-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        vertical-align: baseline;
+        top: 7px;
+        position: relative;
+    }
+
+    .fw {
+        font-weight: 600;
+    }
+
+    .my_post_info {
+        width: 75%;
+        float: left;
+        margin-left: 25px;
+    }
+    .p-3 {
+        padding: 1rem!important;
+    }
+    .pl-0, .px-0 {
+        padding-left: 0!important;
+    }
+    .pb-0, .py-0 {
+        padding-bottom: 0!important;
+    }
+    .mx-0 {
+         margin-left: 0!important;
+     }
+    .col {
+        -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .fz14 {
+        font-size: 14px!important;
+    }
+    .mt-2, .my-2 {
+        margin-top: .5rem!important;
+    }
+    .ads {
+        background: #20a0ff;
+        padding: 2px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .text-muted {
+        color: #34495e!important;
+    }
+    blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+</style>
+
+<body style="background: #eff3f5">
 <div id="header" style="position: sticky;top: -1px;z-index: 5;"></div>
 
 <div class="user_content">
     <input id="user_id" type="hidden">
-    <div class="header_user">
+    <div class="header_user" style="position: relative; margin: auto;">
 
         <div class="user_img_div">
             <img class="user_img" id="user_img" src="../static/image_user/boy_default.jpg" alt="">
         </div>
 
         <div class="user_navigate">
-            <div class="btn-group-vertical" role="group" aria-label="...">
+            <div class="btn-group-vertical" role="group">
                 <button type="button" class="btn btn-default" id="personal_info_btn">个人信息</button>
-                <button type="button" class="btn btn-default">发帖</button>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Dropdown link</a></li>
-                        <li><a href="#">Dropdown link</a></li>
-                    </ul>
-                </div>
+                <button type="button" class="btn btn-default" id="my_post_btn">发帖</button>
+                <button type="button" class="btn btn-default" id="draft_box_btn">草稿箱</button>
             </div>
         </div>
     </div>
-    <div class="user_personalInfo">
-        <!--展示页面-->
-        <form class="show_info">
-            <div class="form-group">
-                <label for="username">账号</label>
-                <input type="text" class="form-control" id="username" disabled="disabled">
-            </div>
-            <div class="form-group">
-                <label for="nickname">昵称</label>
-                <input type="text" class="form-control" id="nickname" disabled="disabled">
-            </div>
-            <div class="form-group">
-                <label for="telephone">电话号码</label>
-                <input type="tel" class="form-control" id="telephone" disabled="disabled">
-            </div>
-            <div class="form-group">
-                <label for="gender">性别</label>
-                <input type="tel" class="form-control" id="gender" disabled="disabled">
-            </div>
-            <div style="text-align: center;margin-top: 20px">
-                <button type="button" class="btn btn-info" id="change_info_btn">修改信息</button>
-            </div>
-        </form>
-        <!--修改页面-->
-        <form class="change_info" hidden="hidden" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="username_for_change">账号</label><span id="msg" style="padding-left: 30px;color: red"></span>
-                <input type="text" class="form-control" id="username_for_change">
-            </div>
-            <div class="form-group">
-                <label for="nickname_for_change">昵称</label>
-                <input type="text" class="form-control" id="nickname_for_change">
-            </div>
-            <div class="form-group">
-                <label for="telephone_for_change">电话号码</label>
-                <input type="tel" class="form-control" id="telephone_for_change">
+    <div class="row">
+        <div class="user_personalInfo .col-md-8">
+            <!--展示页面-->
+            <form class="show_info">
+                <div class="form-group">
+                    <label for="username">账号</label>
+                    <input type="text" class="form-control" id="username" disabled="disabled">
+                </div>
+                <div class="form-group">
+                    <label for="nickname">昵称</label>
+                    <input type="text" class="form-control" id="nickname" disabled="disabled">
+                </div>
+                <div class="form-group">
+                    <label for="telephone">电话号码</label>
+                    <input type="tel" class="form-control" id="telephone" disabled="disabled">
+                </div>
+                <div class="form-group">
+                    <label for="gender">性别</label>
+                    <input type="tel" class="form-control" id="gender" disabled="disabled">
+                </div>
+                <div style="text-align: center;margin-top: 20px">
+                    <button type="button" class="btn btn-info" id="change_info_btn">修改信息</button>
+                </div>
+            </form>
+            <!--修改页面-->
+            <form class="change_info" hidden="hidden" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="username_for_change">账号</label><span id="msg" style="padding-left: 30px;color: red"></span>
+                    <input type="text" class="form-control" id="username_for_change">
+                </div>
+                <div class="form-group">
+                    <label for="nickname_for_change">昵称</label>
+                    <input type="text" class="form-control" id="nickname_for_change">
+                </div>
+                <div class="form-group">
+                    <label for="telephone_for_change">电话号码</label>
+                    <input type="tel" class="form-control" id="telephone_for_change">
+                </div>
+
+                <div class="form-group" style="display: inline-grid">
+                    <label>性别</label>
+                    <label style="margin-left: 10px">
+                        <input type="radio" name="blankRadio" id="genderRadio1" value="男"> 男
+                        <input type="radio" name="blankRadio" id="genderRadio2" value="女" style="margin-left: 20px"> 女
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="fileupload">头像</label>
+                    <input type="file" id="fileupload" accept="image/*" name="file">
+                    <p class="help-block">选择您心仪的图片当做头像吧</p>
+                </div>
+
+                <div style="margin-top: 40px">
+                    <!-- Contextual button for informational alert messages -->
+                    <button type="button" class="btn btn-info" style="margin-left: 35%" id="cancel_info_btn">取消</button>
+                    <button type="button" class="btn btn-success" style="margin-left: 15%" id="submit_info_btn">确认修改
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="my_post_info .col-md-8" hidden="hidden">
+            <div class="title-article ksd-title-article-link list-card" data-href="forumDetails?id=1">
+                <span class="iconfont iconzhiding ksd-iconzhiding"></span>
+                <a target="_blank" href="forumDetails?id=1" class="hlink">
+                    <h1>第一篇文章哦~</h1>
+                </a>
+
+                <a target="_blank" href="forumDetails?id=1" class="hlink2">
+                    <p>看看能不能正常展示</p>
+                </a>
+                <div class="title-msg">
+                                    <span>
+                                        <!--指向个人主页-->
+                                        <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="">
+                                        <img src="../static/image_user/94ecb8f75580206b3cffb3c0dce862f8.jpg"
+                                             class="ksd-avatar" alt="" style="">
+                                        <span class="mx-1">带头山炮</span></a>
+
+                                        <!--<span class="svipicon"><i class="iconfont iconsvip"></i></span>-->
+                                    </span>
+                    <span class="pr-2 pl-2 ksd-screen-time-no"><label class="fw">时间：</label><span>2021-04-19 15:27:13</span></span>
+                    <span class="pr-2 none"><label class="fw">评论数：</label><span>5</span></span>
+                    <span class=" pr-2"><label class="fw">浏览：</label><span>746</span></span>
+                    <span><label class="fw">分类：</label>
+                                        <a href="forumIndex?searchKey=测试文章" class="ksd-topic-tags">测试文章</a>
+                                    </span>
+                </div>
             </div>
 
-            <div class="form-group" style="display: inline-grid">
-                <label>性别</label>
-                <label style="margin-left: 10px">
-                    <input type="radio" name="blankRadio" id="genderRadio1" value="男"> 男
-                    <input type="radio" name="blankRadio" id="genderRadio2" value="女" style="margin-left: 20px"> 女
-                </label>
+            <div class="title-article ksd-title-article-link list-card" data-href="forumDetails?id=1">
+                <span class="iconfont iconzhiding ksd-iconzhiding"></span>
+                <a target="_blank" href="forumDetails?id=1" class="hlink">
+                    <h1>第一篇文章哦~</h1>
+                </a>
+                <a target="_blank" href="forumDetails?id=1" class="hlink2">
+                    <p>看看能不能正常展示</p>
+                </a>
+                <div class="title-msg">
+                                    <span>
+                                        <!--指向个人主页-->
+                                        <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="">
+                                        <img src="../static/image_user/94ecb8f75580206b3cffb3c0dce862f8.jpg"
+                                             class="ksd-avatar" alt="" style="">
+                                        <span class="mx-1">带头山炮</span></a>
+
+                                        <!--<span class="svipicon"><i class="iconfont iconsvip"></i></span>-->
+                                    </span>
+                    <span class="pr-2 pl-2 ksd-screen-time-no"><label class="fw">时间：</label><span>2021-04-19 15:27:13</span></span>
+                    <span class="pr-2 none"><label class="fw">评论数：</label><span>5</span></span>
+                    <span class=" pr-2"><label class="fw">浏览：</label><span>746</span></span>
+                    <span><label class="fw">分类：</label>
+                                        <a href="forumIndex?searchKey=测试文章" class="ksd-topic-tags">测试文章</a>
+                                    </span>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="fileupload">头像</label>
-                <input type="file" id="fileupload" accept="image/*" name="file">
-                <p class="help-block">选择您心仪的图片当做头像吧</p>
+        </div>
+        <div class="draft_box_info" hidden="hidden">
+            <div class="title-article ksd-title-article-link list-card" data-href="forumDetails?id=1">
+                <span class="iconfont iconzhiding ksd-iconzhiding"></span>
+                <a target="_blank" href="forumDetails?id=1" class="hlink">
+                    <h1>第一篇文章哦~</h1>
+                </a>
+
+                <a target="_blank" href="forumDetails?id=1" class="hlink2">
+                    <p>看看能不能正常展示</p>
+                </a>
+                <div class="title-msg">
+                                    <span>
+                                        <!--指向个人主页-->
+                                        <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="">
+                                        <img src="../static/image_user/94ecb8f75580206b3cffb3c0dce862f8.jpg"
+                                             class="ksd-avatar" alt="" style="">
+                                        <span class="mx-1">带头山炮</span></a>
+
+                                        <!--<span class="svipicon"><i class="iconfont iconsvip"></i></span>-->
+                                    </span>
+                    <span class="pr-2 pl-2 ksd-screen-time-no"><label class="fw">时间：</label><span>2021-04-19 15:27:13</span></span>
+                    <span class="pr-2 none"><label class="fw">评论数：</label><span>5</span></span>
+                    <span class=" pr-2"><label class="fw">浏览：</label><span>746</span></span>
+                    <span><label class="fw">分类：</label>
+                                        <a href="forumIndex?searchKey=测试文章" class="ksd-topic-tags">测试文章</a>
+                                    </span>
+                </div>
             </div>
 
-            <div style="margin-top: 40px">
-                <!-- Contextual button for informational alert messages -->
-                <button type="button" class="btn btn-info" style="margin-left: 35%" id="cancel_info_btn">取消</button>
-                <button type="button" class="btn btn-success" style="margin-left: 15%" id="submit_info_btn">确认修改
-                </button>
+            <div class="title-article ksd-title-article-link list-card" data-href="forumDetails?id=1">
+                <span class="iconfont iconzhiding ksd-iconzhiding"></span>
+                <a target="_blank" href="forumDetails?id=1" class="hlink">
+                    <h1>第一篇文章哦~</h1>
+                </a>
+                <a target="_blank" href="forumDetails?id=1" class="hlink2">
+                    <p>看看能不能正常展示</p>
+                </a>
+                <div class="title-msg">
+                                    <span>
+                                        <!--指向个人主页-->
+                                        <a href="/user/2cbe4161a6c64bc780bf61e36d87a03b" target="_blank" title="">
+                                        <img src="../static/image_user/94ecb8f75580206b3cffb3c0dce862f8.jpg"
+                                             class="ksd-avatar" alt="" style="">
+                                        <span class="mx-1">带头山炮</span></a>
+
+                                        <!--<span class="svipicon"><i class="iconfont iconsvip"></i></span>-->
+                                    </span>
+                    <span class="pr-2 pl-2 ksd-screen-time-no"><label class="fw">时间：</label><span>2021-04-19 15:27:13</span></span>
+                    <span class="pr-2 none"><label class="fw">评论数：</label><span>5</span></span>
+                    <span class=" pr-2"><label class="fw">浏览：</label><span>746</span></span>
+                    <span><label class="fw">分类：</label>
+                                        <a href="forumIndex?searchKey=测试文章" class="ksd-topic-tags">测试文章</a>
+                                    </span>
+                </div>
             </div>
-        </form>
+        </div>
+
+        <div class="sidebar .col-md-4">
+            <div class="ads">
+                <a href="javascript:void(0);" onclick="publishArticle()"
+                   class="layui-btn nav-link-down nav-link-login layui-btn-normal" style="width: 100%;">
+                    <span class="layui-icon layui-icon-heart"></span>
+                    关注
+                </a>
+            </div>
+            <div class="card mb-3 position-relative" style="border:none;border-radius: 6px;">
+                <div class="p-3">
+                    <div class="row mx-0 text-center pb-2 pt-2">
+                        <div class="col px-0 col-md-4">
+                            <div class="pb-0 threads_num fz14 user_num">120328</div>
+                            <div class="mt-2 fz14 small text-muted">文章</div>
+                        </div>
+                        <div class="col px-0 col-md-4">
+                            <div class="pb-0 digests_num fz14 post_num">4561</div>
+                            <div class="mt-2 fz14 small text-muted">关注</div>
+                        </div>
+                        <div class="col px-0 col-md-4">
+                            <div class="pb-0 threads_num fz14 comment_num">3052</div>
+                            <div class=" mt-2 fz14 small text-muted">粉丝</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+
 </div>
 
 <!--导入布局js，共享header和footer-->
